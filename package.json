@@ -1,0 +1,23 @@
+{
+  "name": "servidorlocal",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/varelaannette0-boop/ServidorLocal#readme",
+  "bugs": {
+    "url": "https://github.com/varelaannette0-boop/ServidorLocal/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/varelaannette0-boop/ServidorLocal.git"
+  },
+  "license": "ISC",
+  "author": "Cristalina",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
