@@ -17,6 +17,7 @@ let servico: Array<ServicoType> = [{
 
 let catalogoServico: ServicoType[] = []
 
+// adicionar um servico novo
 export function adicionarServico(servico: ServicoType) {
     if (!servico.nome || servico.nome.trim()=== "") {
         return {sucesso : false, mensagem: "Nome do serviço é obrigatorio" };
@@ -45,5 +46,43 @@ export function adicionarServico(servico: ServicoType) {
     }
      
 };
+
+// listar todos os servicos
+export function listarServicos(): ServicoType[] {
+    //TODO: implementar fetch de servicos
+
+    return catalogoServico
+}
+
+//apagar um servico
+export function apagarServico(nome: string): boolean {
+    //TODO: implementar delete de servico
+
+    const novoCatalogoTemp: ServicoType[] = []
+
+    for (let i = 0; i < catalogoServico.length; i++) {
+        if(catalogoServico[i]?.nome && catalogoServico[i]?.nome !== nome) {
+            novoCatalogoTemp.push(catalogoServico[i]!)
+        }
+
+    } //devolve um novo catalogo sem o servico que foi apagado
+
+    catalogoServico = novoCatalogoTemp
+
+    return true
+}
+
+//obter um servico pelo nome
+export function obterServico(nome: string): ServicoType | null {
+    for (let i = 0; i < catalogoServico.length; i++) {
+        if (catalogoServico[i]?.nome === nome) {
+            return catalogoServico[i]!
+        }
+    }
+    return null
+}
+
+
+
 
 console.log(servico);
