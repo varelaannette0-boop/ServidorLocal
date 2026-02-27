@@ -1,10 +1,4 @@
-interface ServicoType {
-    nome : string;
-    precoHora : number;
-    categoria : string;
-    minimoDescontos : number;
-    percentagemDescontos : number;
-}
+import type { ServicoType, } from "./utils/types.js";
 
 let servico: Array<ServicoType> = [{
     nome: "limpeza",
@@ -15,7 +9,7 @@ let servico: Array<ServicoType> = [{
 
 }];
 
-let catalogoServico: ServicoType[] = []
+export let catalogoServico: ServicoType[] = []
 
 // adicionar um servico novo
 export function adicionarServico(servico: ServicoType) {
