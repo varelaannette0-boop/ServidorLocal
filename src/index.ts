@@ -72,7 +72,11 @@ app.post("/calcular-orcamento", (req: Request, res: Response) => {
 
     const calcularOrcamentoresponse = calcularOrcamento(pedido)
 
-    res.json(calcularOrcamentoresponse)
+    res.json({
+         message: "Orcamento calculado com sucesso",
+    orcamentoTotal: calcularOrcamentoresponse
+    })
+   
 })
 
 app.listen(8080, () => {

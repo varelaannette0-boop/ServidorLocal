@@ -1,11 +1,13 @@
 import { catalogoServico } from "./servico.js";
-import type { PedidoServicoType, ServicoType } from "./utils/types.js";
+import type { PedidoServicoType, PrestadorType, ServicoType } from "./utils/types.js";
 
-const taxaUrgencia : number = 0.3
-const minimoParaDesconto : number = 1000
-const percentagemDescontos : number = 0.1
+const taxaUrgencia: number = 0.3
+const minimoParaDesconto: number = 100
+const percentagemDescontos: number = 0.1
 
 const servicosSelecionados: ServicoType[] = []
+const prestadoresDeServicos: PrestadorType[] = []
+const prestadoresSelecionados: PrestadorType[] = []
 
 // funcao para selecionar servicos e horasEstimadas
 export function selecionarServicos(nome: string,) {
@@ -19,20 +21,37 @@ export function selecionarServicos(nome: string,) {
     }
     return false
 }
+// funcao para criar prestadores de servico
+export function criarPrestadorDeServico(novoPrestador: PrestadorType) {
+    // verificar se o prestador ja esta no array
+    prestadoresDeServicos.map((prestadorExistente: PrestadorType) => {
+        if (prestadorExistente.nome === novoPrestador.nome) {
+            //se o prestador ja existir, retorna uma mensagem de erro
+            return {
+                status: false,
+                message: "ja existe um prestador de servico com esse nome",
+                data: null
+            }
+        }
 
+    })
+
+    // se o prestador nao existir, adicionamos o novo prestador
+    prestadoresDeServicos.push(novoPrestador)
+}
 // funcao para calcular o orcamento
 export function calcularOrcamento(pedido: PedidoServicoType) {
-    let totalBruto : number = 0
-    let totalFinal : number = 0
+    let totalBruto: number = 0
+    let totalFinal: number = 0
 
-    servicosSelecionados.map((servico)=>{
+    servicosSelecionados.map((servico) => {
         let totalDoServico: number = servico.precoHora * pedido.horasEstimadas
         totalBruto = totalBruto + totalDoServico
 
     })
 
     if (pedido.urgente) {
-        totalFinal = totalBruto + (totalBruto + taxaUrgencia)
+        totalFinal = totalBruto + (totalBruto * taxaUrgencia)
     }
 
     if (totalBruto >= minimoParaDesconto) {
@@ -50,11 +69,11 @@ export function calcularOrcamento(pedido: PedidoServicoType) {
 
 const pedido: Array<PedidoServicoType> = [
     {
-      cliente: "joao",
-      descricao: "conserto de computador",
-      horasEstimadas: 5,
-      urgente: true 
-        
+        cliente: "joao",
+        descricao: "conserto de computador",
+        horasEstimadas: 5,
+        urgente: true
+
     },
 
 ]
@@ -70,7 +89,7 @@ function processarPedido(pedido: PedidoServicoType, precoHora: number) {
         valorBase: valorBase,
         valorFinal: valorFinal
     }
-   
+
 }
 
 /*
