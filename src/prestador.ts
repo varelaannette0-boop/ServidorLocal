@@ -1,3 +1,5 @@
+import type { selecionarPrestadorServicos } from "./utils/types.js"
+
 class Prestador{
     nome: string
     precoHora: number
@@ -24,6 +26,9 @@ class Prestador{
 }
 
 const prestador1 = new Prestador("Cristalina", 100, "Desenvolvidor de software", 1000, 0.1, 0.3)
+
+
+
 
 
 

@@ -1,6 +1,6 @@
 import express, {type Request, type Response} from "express";
 import {adicionarServico, apagarServico, listarServicos, obterServico} from "./servico.js"
-import { calcularOrcamento, selecionarServicos } from "./orcamento.js";
+import { calcularOrcamento, selecionarServicos, selecionarPrestadorServicos, criarPrestadorDeServico} from "./orcamento.js";
 
 const app = express();
 app.use(express.json())
@@ -19,10 +19,30 @@ app.post("/adicionar-servico", (req: Request, res: Response) =>{
     res.json(addServicoResponse)
 })
 
-//rota para listat todos os servicos
+//rota para lista todos os servicos
 app.get("/listar-servico", (resq: Request, res: Response) => {
     const listServicoResponse = listarServicos()
     res.json(listServicoResponse)
+
+})
+
+//rota para seleciona prestadores
+app.post("/selecionar-prestadores", (req: Request, res: Response) => {
+    const {nome} = req.body
+
+    const selecionarPrestadorResponse = selecionarPrestadorServicos(nome as string)
+
+    res.json(selecionarPrestadorResponse)
+})
+
+// rota para criar prestadores
+app.post("/criar-prestador", (req: Request, res: Response) =>{
+    // pegar o corpo de requisicao com os dados do novo prestador
+    const novoPrestador = req.body
+
+    const criarPrestadorResponse = criarPrestadorDeServico(novoPrestador)
+
+    res.json(criarPrestadorResponse)
 
 })
 

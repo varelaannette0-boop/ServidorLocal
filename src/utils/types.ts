@@ -27,3 +27,9 @@ export interface PrestadorType {
     percentagemDesconto: number
     taxaUrgencia: number
 }
+
+export interface selecionarPrestadorServicos{
+    nome: string;
+    especialidade: string;
+    precoHora: number;
+}

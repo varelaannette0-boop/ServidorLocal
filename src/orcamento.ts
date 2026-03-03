@@ -21,6 +21,24 @@ export function selecionarServicos(nome: string,) {
     }
     return false
 }
+
+// funcao para selecionar prestadores
+export function selecionarPrestadorServicos(nomeDoPrestador: string,) {
+    // ciclo for que percorre o array de prestadoresDeServico
+    for (let i = 0; i < catalogoServico.length; i++) {
+        // if que verifica se o item [i] do array eh igual ao nome recebido
+        if (prestadoresDeServicos[i]?.nome === nomeDoPrestador) {
+            // se for igual,  adiciona o iten [i] ao array prestadoresSelecionados.push
+            prestadoresSelecionados.push(prestadoresDeServicos[i]!)
+           // retornar verdadeiro
+            return true
+        }
+
+
+    }
+    // senao return false
+    return false
+}
 // funcao para criar prestadores de servico
 export function criarPrestadorDeServico(novoPrestador: PrestadorType) {
     // verificar se o prestador ja esta no array
@@ -36,8 +54,15 @@ export function criarPrestadorDeServico(novoPrestador: PrestadorType) {
 
     })
 
+
+
     // se o prestador nao existir, adicionamos o novo prestador
     prestadoresDeServicos.push(novoPrestador)
+    return {
+            status: true,
+            message: "Prestador Adicionado",
+            data: null
+            }
 }
 // funcao para calcular o orcamento
 export function calcularOrcamento(pedido: PedidoServicoType) {
