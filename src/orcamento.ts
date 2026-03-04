@@ -30,7 +30,7 @@ export function selecionarPrestadorServicos(nomeDoPrestador: string,) {
         if (prestadoresDeServicos[i]?.nome === nomeDoPrestador) {
             // se for igual,  adiciona o iten [i] ao array prestadoresSelecionados.push
             prestadoresSelecionados.push(prestadoresDeServicos[i]!)
-           // retornar verdadeiro
+            // retornar verdadeiro
             return true
         }
 
@@ -59,11 +59,94 @@ export function criarPrestadorDeServico(novoPrestador: PrestadorType) {
     // se o prestador nao existir, adicionamos o novo prestador
     prestadoresDeServicos.push(novoPrestador)
     return {
-            status: true,
-            message: "Prestador Adicionado",
-            data: null
-            }
+        status: true,
+        message: "Prestador Adicionado",
+        data: null
+    }
 }
+
+//funcao para editar um prestador de servico
+export function editarPrestadorDeServico(nomeDoPrestador: string, novosDadosDoPrestador: PrestadorType) {
+    // encontrar o prestador de servico a editar na minha lista
+    // ciclo que percorre a lista e verifica o nome do prestador de servico
+    prestadoresDeServicos.map((prestadorExistente: PrestadorType) => {
+        if (prestadorExistente.nome === nomeDoPrestador) {
+            prestadorExistente.nome = novosDadosDoPrestador.nome
+            prestadorExistente.precoHora = novosDadosDoPrestador.precoHora
+            prestadorExistente.profissao = novosDadosDoPrestador.profissao
+            prestadorExistente.minimoParaDesconto = novosDadosDoPrestador.minimoParaDesconto
+            prestadorExistente.percentagemDesconto = novosDadosDoPrestador.percentagemDesconto
+            prestadorExistente.taxaUrgencia = novosDadosDoPrestador.taxaUrgencia
+
+
+
+            return {
+                status: true,
+                message: "Prestador de servico editado com sucesso",
+                data: prestadorExistente
+            }
+        }
+
+    })
+    // se nao existir nenhum prestador com o nome recebido, retorna uma mensagem de erro
+    return {
+        status: false,
+        message: "Nao existe nenhum prestador de servico com esse nome",
+        data: null
+    }
+
+
+
+}
+// prestadoresDeServicos.replace()
+
+//funcao para pagar um prestador de servico
+export function apagarPrestadorDeServico(nomeDoPrestador: string) {
+    // ciclo para percorrer a lista de prestadores
+    //for (let i = 0; i < prestadoresDeServicos.length; i++) {
+    // if para verificar se o  nome do prestador for igual ao nome recebido,
+    // if (prestadoresDeServicos[i]?.nome === nomeDoPrestador) {
+    // se encontrado,  remover o prestador
+    // prestadoresDeServicos.splice(i, 1)
+    // prestadoresDeServicos.replace(i, "")
+    // retornar uma mensagem de sucesso
+    // }
+    //}
+
+
+    //prestadoresDeServicos.find() // se encontrar, devolve o item
+    //prestadoresDeServicos.some() // se encontrar, devolve true
+    //prestadoresDeServicos.some() // se nao encontrar, devolve false
+
+    // validacao do nome do prestador
+    if (!nomeDoPrestador) {
+
+        return {
+            status: false,
+            message: " Nao existe nenhum prestador  de servico com esse nome",
+            data: null
+        }
+    }
+    
+
+    prestadoresDeServicos.filter(
+        (prestadorExistente: PrestadorType) =>
+            prestadorExistente.nome !== nomeDoPrestador
+    )
+
+}
+
+
+
+
+
+
+// se nao existir nenhum prestador com o nome recebido, retorna uma mensagem de erro
+
+
+//funcao para obter um prestador de servico pelo nome
+
+
 // funcao para calcular o orcamento
 export function calcularOrcamento(pedido: PedidoServicoType) {
     let totalBruto: number = 0

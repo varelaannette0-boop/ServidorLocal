@@ -1,6 +1,6 @@
 import express, {type Request, type Response} from "express";
 import {adicionarServico, apagarServico, listarServicos, obterServico} from "./servico.js"
-import { calcularOrcamento, selecionarServicos, selecionarPrestadorServicos, criarPrestadorDeServico} from "./orcamento.js";
+import { calcularOrcamento, selecionarServicos, selecionarPrestadorServicos, criarPrestadorDeServico, editarPrestadorDeServico, apagarPrestadorDeServico} from "./orcamento.js";
 
 const app = express();
 app.use(express.json())
@@ -46,6 +46,23 @@ app.post("/criar-prestador", (req: Request, res: Response) =>{
 
 })
 
+app.put("/editar-prestador", (req: Request, res: Response)=> {
+    const {nomeDoPrestador, novosDadosDoPrestador} = req.body
+
+    const editarPrestadorResponse = editarPrestadorDeServico(nomeDoPrestador as string, novosDadosDoPrestador)
+
+    res.json(editarPrestadorResponse)
+})
+
+app.delete("/apagar-prestador", (req: Request, res: Response)=>{
+    const {nomeDoPrestador} = req.query
+
+    if (nomeDoPrestador) {
+        const apagarPrestadorResponse = apagarPrestadorDeServico(nomeDoPrestador as string)
+
+        res.json(apagarPrestadorResponse)
+    }
+})
 //rota para apagar um servico
 app.delete("/apagar-servico", (req: Request, res: Response) =>{
     const {nome} = req.query
