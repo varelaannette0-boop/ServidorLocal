@@ -1,6 +1,7 @@
 import express, {type Request, type Response} from "express";
 import {adicionarServico, apagarServico, listarServicos, obterServico} from "./servico.js"
 import { calcularOrcamento, selecionarServicos, selecionarPrestadorServicos, criarPrestadorDeServico, editarPrestadorDeServico, apagarPrestadorDeServico} from "./orcamento.js";
+import { getOrcamento, getUserById, getUsers, PostNewUser } from "./utils/users.js";
 
 const app = express();
 app.use(express.json())
@@ -115,6 +116,89 @@ app.post("/calcular-orcamento", (req: Request, res: Response) => {
     })
    
 })
+
+// rota para selecionar todos os utilizadores presentes no base de dados
+
+app.get("/get-users", async (req: Request, res: Response) => {
+    const getUsersResponse = await getUsers()
+
+    res.json(getUsersResponse)
+})
+
+// rota para selecionar todos os orcamentos presentes no base de dados
+
+app.get("/get-orcamento", async (req: Request, res: Response) => {
+    const getOrcamentoResponse = await getOrcamento()
+
+    res.json(getOrcamentoResponse)
+})
+
+// rota para selecionar utilizadores por id
+
+app.get("/get-user-by-id", async (req: Request, res: Response) => {
+  const { id } = req.query
+
+  if (id) {
+    const getIdUserResponse = await getUserById(id as string)
+
+    if (!getIdUserResponse) {
+      res.status(404).json({
+        status: "error",
+        message: "Utilizador não encontrado",
+        data: null
+      })
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Utilizador encontrado",
+      data: getIdUserResponse
+    })
+  } else {
+    res.status(400).json({
+      status: "error",
+      message: "id eh obrigatorio",
+      data: null
+    })
+  }
+
+})
+
+// rota para novo utilizador
+
+app.post("/post-new-user", async (req: Request, res: Response) => {
+    const dadosUtlizador = req.body
+  const PostNewUserResponse = await PostNewUser(dadosUtlizador)
+  
+  if (PostNewUserResponse) {
+
+    if (!PostNewUserResponse) {
+      res.status(404).json({
+        status: "error",
+        message: "Nao foi possivel adicionar o utilizador",
+        data: null
+      })
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Utilizador adicionado com sucesso",
+      data: PostNewUserResponse
+    })
+  } else {
+    res.status(400).json({
+      status: "error",
+      message: "ereei",
+      data: null
+    })
+  }
+
+})
+;
+
+
+
+
 
 app.listen(8080, () => {
     console.log("Servidor rodando na porta 8080");

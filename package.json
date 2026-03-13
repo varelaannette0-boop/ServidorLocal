@@ -2,7 +2,6 @@
   "name": "servidorlocal",
   "version": "1.0.0",
   "description": "",
- 
   "license": "ISC",
   "author": "Cristalina",
   "type": "module",
@@ -13,7 +12,8 @@
     "dev": "tsx watch src/index.ts"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mysql2": "^3.19.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
