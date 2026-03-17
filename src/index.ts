@@ -1,7 +1,8 @@
 import express, {type Request, type Response} from "express";
-import {adicionarServico, apagarServico, listarServicos, obterServico} from "./servico.js"
+import {addServicoDB, adicionarServico, apagarServico, apanharServico, deleteService, getAllServices, getServiceById, listarServicos, obterServico, updateService,} from "./servico.js"
 import { calcularOrcamento, selecionarServicos, selecionarPrestadorServicos, criarPrestadorDeServico, editarPrestadorDeServico, apagarPrestadorDeServico} from "./orcamento.js";
 import { getOrcamento, getUserById, getUsers, PostNewUser } from "./utils/users.js";
+import type { serviceDBType } from "./utils/types.js";
 
 const app = express();
 app.use(express.json())
@@ -197,7 +198,169 @@ app.post("/post-new-user", async (req: Request, res: Response) => {
 ;
 
 
+//rota para insiri servico
 
+app.post("/create-service",async(req:Request, res:Response)=>{
+  const newService:serviceDBType = req.body
+
+  if (!newService) {
+    res.status(400).json({
+      status: "error",
+      message: "Dados de servicos invalidos",
+      data: null
+    })
+
+    return
+ }
+  console.log(newService)
+  const createServiceResponse = await addServicoDB(newService)
+  if (createServiceResponse === null) {
+    return res.status(400).json({
+      status: "error",
+      message: "Erro ao criar servico",
+      data: null
+    })
+  }
+
+  res.status(200).json({
+      status: "error",
+      message: "Servico Criado  com sucesso",
+      data: createServiceResponse
+    })
+})
+
+app.get("/get-service-by-id", async (req: Request, res: Response)=>{
+  const {id} = req.params
+
+  if (!id) {
+    return res.status(400).json({
+      status: "error",
+       message: "ID obrigatorio",
+       data: null
+    })
+  }
+
+  const getServiceByIdResponse = await getServiceById(id as string)
+
+  if (!getServiceByIdResponse) {
+     return res.status(400).json ({
+      status: "Error",
+      message : "Servico nao encontrado",
+      data: null
+     })
+  }
+ res.status(200).json({
+      status: "error",
+      message: "Servico encontrado",
+      data: getServiceByIdResponse
+    })
+
+})
+
+app.get("/get-all-services", async (req: Request, res: Response)=>{
+  const getAllServicesResponse = await getAllServices()
+
+  if (!getAllServicesResponse) {
+    return res.status(400).json({
+      status: "error",
+       message: "Erro ao selecionar servicos",
+       data: null
+    })
+  }
+
+ res.status(200).json({
+      status: "sucess",
+      message: "Servicos encontrados",
+      data: getAllServicesResponse
+    })
+
+})
+
+app.put("/update-service-by-id/:id", async (req: Request, res: Response)=>{
+  const {id} = req.params
+
+  const updatedService: serviceDBType = req.body
+
+  if (!id) {
+    return res.status(400).json({
+      status: "error",
+       message: "ID obrigatorio",
+       data: null
+    })
+
+  }
+
+  if (!updatedService) {
+    return res.status(400).json({
+      status: "error",
+       message: "Dados de servicos invalidos",
+       data: null
+    })
+  }
+
+const updateServiceResponse = await updateService(id as string, updatedService)
+
+if (!updateServiceResponse) {
+    return res.status(400).json({
+      status: "error",
+       message: "Erro ao atualizar servico",
+       data: null
+    })
+  }
+
+  return res.status(200).json({
+    status: "success",
+    message: "servico atualizado com sucesso",
+    data: updateServiceResponse
+  })
+
+
+})
+
+
+app.delete("/delete-service-by-id", async (req: Request, res: Response)=>{
+  const {id} = req.params
+ if (!id) {
+    return res.status(400).json({
+      status: "error",
+       message: "ID obrigatorio",
+       data: null
+    })
+ }
+
+  const deleteServiceResponse = await deleteService(id as string)
+
+  if (!deleteServiceResponse) {
+    return res.status(400).json({
+      status: "error",
+       message: "Erro ao atualizar servico",
+       data: null
+    })
+  }
+  return res.status(200).json({
+    status: "success",
+    message: "servico atualizado com sucesso",
+    data: deleteServiceResponse
+ })
+})
+
+
+
+
+
+
+
+
+
+// rota para listar servico
+
+
+app.get("/listarServico",async(req:Request,res:Response)=>{
+  
+  console.log("servico apanhado")
+  const listarServicosResponse = await apanharServico()
+  res.json (listarServicosResponse)
+})
 
 
 app.listen(8080, () => {

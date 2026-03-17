@@ -33,3 +33,13 @@ export interface selecionarPrestadorServicos{
     especialidade: string;
     precoHora: number;
 }
+
+export interface serviceDBType{
+    id : string,
+    nome : string,
+    descricao : string,
+    categoria : string,
+    enabled : boolean,
+    created_at : string,
+    updated_at :  string
+}
