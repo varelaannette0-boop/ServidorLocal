@@ -43,3 +43,17 @@ export interface serviceDBType{
     created_at : string,
     updated_at :  string
 }
+
+export interface UserType{
+    nome : string,
+    numero_identificacao : string,
+    data_nascimento : string,
+    email : boolean,
+    password : string,
+    telefone  :  string,
+    pais : string,
+    localidade : string,
+    enabled : string,
+    update_at: string,
+    id : string
+}

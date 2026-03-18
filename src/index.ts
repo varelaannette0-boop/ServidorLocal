@@ -1,7 +1,7 @@
 import express, {type Request, type Response} from "express";
 import {addServicoDB, adicionarServico, apagarServico, apanharServico, deleteService, getAllServices, getServiceById, listarServicos, obterServico, updateService,} from "./servico.js"
 import { calcularOrcamento, selecionarServicos, selecionarPrestadorServicos, criarPrestadorDeServico, editarPrestadorDeServico, apagarPrestadorDeServico} from "./orcamento.js";
-import { getOrcamento, getUserById, getUsers, PostNewUser } from "./utils/users.js";
+import { getOrcamento, getUserById, getUsers, PostNewUser } from "./users.js";
 import type { serviceDBType } from "./utils/types.js";
 
 const app = express();
@@ -198,7 +198,7 @@ app.post("/post-new-user", async (req: Request, res: Response) => {
 ;
 
 
-//rota para insiri servico
+//rota para criar servico
 
 app.post("/create-service",async(req:Request, res:Response)=>{
   const newService:serviceDBType = req.body
@@ -223,11 +223,13 @@ app.post("/create-service",async(req:Request, res:Response)=>{
   }
 
   res.status(200).json({
-      status: "error",
+      status: "success",
       message: "Servico Criado  com sucesso",
       data: createServiceResponse
     })
 })
+
+
 
 app.get("/get-service-by-id", async (req: Request, res: Response)=>{
   const {id} = req.params
@@ -257,6 +259,9 @@ app.get("/get-service-by-id", async (req: Request, res: Response)=>{
 
 })
 
+
+
+
 app.get("/get-all-services", async (req: Request, res: Response)=>{
   const getAllServicesResponse = await getAllServices()
 
@@ -275,6 +280,9 @@ app.get("/get-all-services", async (req: Request, res: Response)=>{
     })
 
 })
+
+
+
 
 app.put("/update-service-by-id/:id", async (req: Request, res: Response)=>{
   const {id} = req.params
@@ -318,7 +326,8 @@ if (!updateServiceResponse) {
 })
 
 
-app.delete("/delete-service-by-id", async (req: Request, res: Response)=>{
+
+app.delete("/delete-service-by-id/:id", async (req: Request, res: Response)=>{
   const {id} = req.params
  if (!id) {
     return res.status(400).json({
@@ -344,23 +353,6 @@ app.delete("/delete-service-by-id", async (req: Request, res: Response)=>{
  })
 })
 
-
-
-
-
-
-
-
-
-// rota para listar servico
-
-
-app.get("/listarServico",async(req:Request,res:Response)=>{
-  
-  console.log("servico apanhado")
-  const listarServicosResponse = await apanharServico()
-  res.json (listarServicosResponse)
-})
 
 
 app.listen(8080, () => {

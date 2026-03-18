@@ -90,7 +90,7 @@ export async function addServicoDB(newservice: serviceDBType) {
     console.log({newservice})
     try {
        
-            const query = `INSERT INTO table_servicos VALUES (?, ?, ?, ?, ?, ?, ?, ) `
+            const query = `INSERT INTO tbl_servicos VALUES (?, ?, ?, ?, ?, ?, ?) `
 
            const values = [
                 null, 
@@ -99,7 +99,7 @@ export async function addServicoDB(newservice: serviceDBType) {
                 newservice.categoria, 
                 newservice.enabled, 
                new Date(), 
-               new Date(),
+               new Date()
             ]
            
                 const rows = await db.execute(query, values)
@@ -115,13 +115,13 @@ export async function addServicoDB(newservice: serviceDBType) {
 
 export async function getServiceById(id:string) {
     try{
-        const query = `SELET * FROM tbl_servicos WHERE id = ?`
+        const query = `DELETE FROM tbl_servicos WHERE id = ?`
 
         const value = [id]
 
-        const rows = await db.execute(query, value)
+        const rows: any = await db.execute(query, value)
 
-        return Array.isArray(rows) && rows.length > 0 ? rows[0]: null
+        return rows [0]?.affectedRows === 0 ? null: rows
     } catch (error) {
         console.log(error)
         return null
@@ -130,7 +130,7 @@ export async function getServiceById(id:string) {
 }
 export async function getAllServices() {
     try {
-        const query = `SELET * FROM tbl_servicos`
+        const query = `SELECT * FROM tbl_servicos`;
 
         const rows = await db.execute(query)
 
@@ -147,14 +147,12 @@ export async function updateService(id: string, updatedService: serviceDBType) {
     try {
         const query = `UPDATE tbl_servicos
                         SET
-                          nome=?
-                          descricao=?
-                          categoria=?
-                          enabled=?
+                          nome=?,
+                          descricao=?,
+                          categoria=?,
+                          enabled=?,
                           updated_at=?
-                        WHERE 
-                          id=?
-                        ;`
+                        WHERE  id=?`
 
         const values = [
             updatedService.nome,
@@ -173,6 +171,8 @@ export async function updateService(id: string, updatedService: serviceDBType) {
         return null
     }
 }
+
+
 
 export async function deleteService(id: string) {
     try {

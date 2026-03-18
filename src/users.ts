@@ -1,4 +1,7 @@
-import db from "../lib/db.js"
+
+import db from "./lib/db.js"
+import type { UserType } from "./utils/types.js"
+import { generateUUID } from "./utils/uuid.js"
 
 export async function getUsers() {
     const [rows] = await db.execute("SELECT * FROM tbl_utilizadores;")
@@ -40,7 +43,7 @@ export async function PostNewUser(dadosUtilizador : any) {
     `;
 
     const values = [
-        dadosUtilizador.id,
+        generateUUID(),
        dadosUtilizador.nome,
         dadosUtilizador.numero_identificacao,
         dadosUtilizador.data_nascimento, 
@@ -66,3 +69,43 @@ export async function PostNewUser(dadosUtilizador : any) {
     }
 }
 
+export async function updatedUser(id: string, updatedUser: UserType) {
+    try{
+
+        const query = `
+
+                UPDATE tbl_utilizadores
+                SET
+                    nome = ?,
+                     numero_identificacao = ? ,
+                     data_nascimento = ?,
+                     email = ?,
+                     password = ?,
+                     telefone = ?,
+                     pais = ?,
+                     localidade = ?,
+                     enabled = ?,
+                     update_at = ?
+
+                WHERE id = ?
+        
+        `
+    }
+    
+    const values = [
+
+ updatedUser.nome,
+         updatedUser.numero_identificacao,
+        updatedUser.data_nascimento, 
+          updatedUser.email,
+         updatedUser.password,
+        updatedUser.telefone,
+       updatedUser.pais,
+       updatedUser.localidade,
+       updatedUser.enabled,
+        new Date(),
+        id
+    ]
+    
+      
+}
