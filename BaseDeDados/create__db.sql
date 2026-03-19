@@ -98,4 +98,12 @@ REFERENCES tbl_servicos(id)
 ALTER TABLE tbl_prestacao_servico
 DROP FOREIGN KEY id_servicos;
 
+ALTER TABLE tbl_servicos
+ADD COLUMN enabled BOOLEAN NOT NULL AFTER categoria;
+
+ALTER TABLE tbl_servicos
+DROP COLUMN updated_at;
+
+ALTER TABLE tbl_servicos
+MODIFY COLUMN categoria VARCHAR(100);
 

@@ -45,6 +45,7 @@ export interface serviceDBType{
 }
 
 export interface UserType{
+     id : string
     nome : string,
     numero_identificacao : string,
     data_nascimento : string,
@@ -54,6 +55,7 @@ export interface UserType{
     pais : string,
     localidade : string,
     enabled : string,
-    update_at: string,
-    id : string
+    created_at : string,
+    update_at: string
+   
 }

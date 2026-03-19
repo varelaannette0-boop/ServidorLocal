@@ -1,5 +1,7 @@
 
 import db from "./lib/db.js"
+import { formatDateDDMMYYYY } from "./utils/date.js"
+import { hashPassword } from "./utils/password.js"
 import type { UserType } from "./utils/types.js"
 import { generateUUID } from "./utils/uuid.js"
 
@@ -43,18 +45,19 @@ export async function PostNewUser(dadosUtilizador : any) {
     `;
 
     const values = [
-        generateUUID(),
-       dadosUtilizador.nome,
-        dadosUtilizador.numero_identificacao,
-        dadosUtilizador.data_nascimento, 
+         generateUUID(),
+         dadosUtilizador.nome,
+         dadosUtilizador.numero_identificacao,
+         formatDateDDMMYYYY (dadosUtilizador.data_nascimento), 
          dadosUtilizador.email,
-        dadosUtilizador.password,
-       dadosUtilizador.telefone,
-       dadosUtilizador.pais,
-       dadosUtilizador.localidade,
-       dadosUtilizador.enabled,
-        new Date(),
-        new Date(),
+         await hashPassword(dadosUtilizador.password),
+         dadosUtilizador.telefone,
+         dadosUtilizador.pais,
+         dadosUtilizador.localidade,
+         dadosUtilizador.enabled,
+         new Date(),
+         new Date(),
+         
     ];
 
 
@@ -90,22 +93,25 @@ export async function updatedUser(id: string, updatedUser: UserType) {
                 WHERE id = ?
         
         `
-    }
+      const values = [
+            id,
+            updatedUser.nome,
+            updatedUser.numero_identificacao,
+            formatDateDDMMYYYY(updatedUser.data_nascimento), 
+            updatedUser.email,
+            await hashPassword(updatedUser.password),
+            updatedUser.telefone,
+            updatedUser.pais,
+            updatedUser.localidade,
+            updatedUser.enabled,
+            new Date()
+       
+    ]  }
     
-    const values = [
+    catch(err){
+        console.log(err)
+    }
 
- updatedUser.nome,
-         updatedUser.numero_identificacao,
-        updatedUser.data_nascimento, 
-          updatedUser.email,
-         updatedUser.password,
-        updatedUser.telefone,
-       updatedUser.pais,
-       updatedUser.localidade,
-       updatedUser.enabled,
-        new Date(),
-        id
-    ]
     
       
 }

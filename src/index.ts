@@ -3,6 +3,7 @@ import {addServicoDB, adicionarServico, apagarServico, apanharServico, deleteSer
 import { calcularOrcamento, selecionarServicos, selecionarPrestadorServicos, criarPrestadorDeServico, editarPrestadorDeServico, apagarPrestadorDeServico} from "./orcamento.js";
 import { getOrcamento, getUserById, getUsers, PostNewUser } from "./users.js";
 import type { serviceDBType } from "./utils/types.js";
+import { formatDate } from "./utils/date.js";
 
 const app = express();
 app.use(express.json())
@@ -348,7 +349,7 @@ app.delete("/delete-service-by-id/:id", async (req: Request, res: Response)=>{
   }
   return res.status(200).json({
     status: "success",
-    message: "servico atualizado com sucesso",
+    message: "servico apagado com sucesso",
     data: deleteServiceResponse
  })
 })
