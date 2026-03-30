@@ -1,64 +1,64 @@
-# paths/servico.yaml
+# paths/proposta.yaml
 paths:
-  /service:
+  /proposta:
     get:
-      summary: Listar todos os serviços
+      summary: Listar todos as propostas
       tags:
-        - Servico
-      description: Retorna uma lista de todos os serviços disponíveis
+        - Proposta
+      description: Retorna uma lista de todos as propostas disponíveis
       responses:
         "200":
-          description: Lista de serviços
+          description: Lista de propostas
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Service"
+                  $ref: "#/components/schemas/Proposta"
         "404":
-          description: "Nenhum serviço encontrado"
+          description: "Nenhum proposta encontrado"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseError"
 
-  /service/create:
+  /proposta/create:
     post:
-      summary: Criar um novo serviço
+      summary: Criar um novo proposta
       tags:
-        - Servico
-      description: Cria um novo serviço
+        - Proposta
+      description: Cria um novo proposta
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateService"
+              $ref: "#/components/schemas/CreateProposta"
       responses:
         "200":
-          description: Serviço criado com sucesso
+          description: Proposta criado com sucesso
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseSucess"
         "400":
-          description: Erro ao criar servico
+          description: Erro ao criar proposta
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseError"
 
-  /service/get-by-id/{id}:
+  /proposta/get-by-id/{id}:
     get:
-      summary: Buscar um servico por ID
+      summary: Buscar um proposta por ID
       tags:
-        - Servico
-      description: Retorna um serviço especificado pelo ID
+        - Proposta
+      description: Retorna um proposta especificado pelo ID
       parameters:
         - name: id
           in: path
           required: true
-          description: ID do servico
+          description: ID do proposta
           schema:
             type: integer
             example: 1
@@ -77,17 +77,17 @@ paths:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseError"
-  /service/update/{id}:
+  /proposta/update/{id}:
     put:
-      summary: Actualizar um servico por ID
+      summary: Actualizar um proposta por ID
       tags:
-        - Servico
-      description: Actualiza um serviço especificado pelo ID
+        - Proposta
+      description: Actualiza um proposta especificado pelo ID
       parameters:
         - name: id
           in: path
           required: true
-          description: ID do servico
+          description: ID do proposta
           schema:
             type: integer
             example: 1
@@ -97,7 +97,7 @@ paths:
           application/json:
             schema:
               type: object
-              $href: "#/components/schemas/CreateService" #tem mesma informacao de CreateService
+              $href: "#/components/schemas/CreateProposta" #tem mesma informacao de CreateService
       responses:
         "200":
           description: Servico actualizado com sucesso
@@ -120,17 +120,17 @@ paths:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseError"
-  /service/delete/{id}:
+  /proposta/delete/{id}:
     delete:
-      summary: Apaga um servico
+      summary: Apaga um proposta
       tags:
-        - Servico
-      description: Apaga um serviço especificado pelo ID
+        - Proposta
+      description: Apaga um proposta especificado pelo ID
       parameters:
         - name: id
           in: path
           required: true
-          description: ID do servico
+          description: ID do proposta
           schema:
             type: integer
             example: 1

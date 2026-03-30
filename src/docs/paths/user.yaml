@@ -1,106 +1,106 @@
-# paths/servico.yaml
+# paths/user.yaml
 paths:
-  /service:
+  /user:
     get:
-      summary: Listar todos os serviços
+      summary: Listar todos os utilizadores
       tags:
-        - Servico
-      description: Retorna uma lista de todos os serviços disponíveis
+        - Utilizador
+      description: Retorna uma lista de todos os utilizadores disponíveis
       responses:
         "200":
-          description: Lista de serviços
+          description: Lista de utilizadores
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Service"
+                  $ref: "#/components/schemas/User"
         "404":
-          description: "Nenhum serviço encontrado"
+          description: "Nenhum utilizador encontrado"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseError"
 
-  /service/create:
+  /user/create:
     post:
-      summary: Criar um novo serviço
+      summary: Criar um novo utilizador
       tags:
-        - Servico
-      description: Cria um novo serviço
+        - Utilizador
+      description: Cria um novo utilizador
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateService"
+              $ref: "#/components/schemas/CreateUser"
       responses:
         "200":
-          description: Serviço criado com sucesso
+          description: Utilizador criado com sucesso
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseSucess"
         "400":
-          description: Erro ao criar servico
+          description: Erro ao criar utilizador
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseError"
 
-  /service/get-by-id/{id}:
+  /user/get-by-id/{id}:
     get:
-      summary: Buscar um servico por ID
+      summary: Buscar um utilizador por ID
       tags:
-        - Servico
-      description: Retorna um serviço especificado pelo ID
+        - Utilizador
+      description: Retorna um utilizador especificado pelo ID
       parameters:
         - name: id
           in: path
           required: true
-          description: ID do servico
+          description: ID do utilizador
           schema:
             type: integer
-            example: 1
+            example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
       responses:
         "200":
-          description: Servico encontrado
+          description: Utilizador encontrado
           content:
             application/json:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseSucess"
         "404":
-          description: Servico nao encontrado
+          description: Utilizador nao encontrado
           content:
             application/json:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseError"
-  /service/update/{id}:
+  /user/update/{id}:
     put:
-      summary: Actualizar um servico por ID
+      summary: Actualizar um utiliazdor por ID
       tags:
-        - Servico
-      description: Actualiza um serviço especificado pelo ID
+        - Utilizador
+      description: Actualiza um utilizador especificado pelo ID
       parameters:
         - name: id
           in: path
           required: true
-          description: ID do servico
+          description: ID do utilizador
           schema:
             type: integer
-            example: 1
+            example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
-              $href: "#/components/schemas/CreateService" #tem mesma informacao de CreateService
+              $href: "#/components/schemas/CreateUser" #tem mesma informacao de CreateUser
       responses:
         "200":
-          description: Servico actualizado com sucesso
+          description: Utilizador actualizado com sucesso
           content:
             application/json:
               schema:
@@ -114,36 +114,36 @@ paths:
                 type: object
                 $ref: "#/components/schemas/ResponseError"
         "404":
-          description: Servico nao encontrado
+          description: Utilizador nao encontrado
           content:
             application/json:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseError"
-  /service/delete/{id}:
+  /user/delete/{id}:
     delete:
-      summary: Apaga um servico
+      summary: Apaga um utilizador
       tags:
-        - Servico
-      description: Apaga um serviço especificado pelo ID
+        - Utilizador
+      description: Apaga um utilizador especificado pelo ID
       parameters:
         - name: id
           in: path
           required: true
-          description: ID do servico
+          description: ID do utilizador
           schema:
             type: integer
-            example: 1
+            example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
       responses:
         "200":
-          description: Servico apagado
+          description: Utilizador apagado
           content:
             application/json:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseSucess"
         "404":
-          description: Servico nao encontrado
+          description: Utilizador nao encontrado
           content:
             application/json:
               schema:

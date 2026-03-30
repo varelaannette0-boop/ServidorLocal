@@ -1,0 +1,80 @@
+#schema/proposta.yaml
+
+components:
+  schemas:
+    Proposta:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        id_prestacao_servico:
+          type: string
+          example: 1
+        preco_hora:
+          type: number
+          example: 10000
+        horas_estimadas:
+          type: number
+          example: 12
+        estado:
+          type: string
+          example: aceito
+        enabled:
+          type: boolean
+          example: true
+        created_at:
+          type: string
+          example: "2010-12-10T00:00:00.000Z"
+        updated_at:
+            typr: string
+            example: "2010-12-10T00:00.000Z"
+  
+    CreateProposta:
+      type: object
+      properties:
+        id_prestacao_servico:
+          type: string
+          example: 1
+        preco_hora:
+          type: number
+          example: 10000
+        horas_estimadas:
+          type: number
+          example: 12
+        estado:
+          type: string
+          example: aceito
+        enabled:
+          type: boolean
+          example: true
+      required:
+        - id_prestacao_servico
+        - preco_hora
+        - horas_estimadas
+        - estado
+        - enabled
+
+    #Schema generico para sucesso
+    ResponseSucess:
+      ttpe: object
+      propreties:
+        message:
+          type: string
+          example: "Servico criado com sucesso"
+        status:
+          type: boolean
+          example: true
+
+    #proposta generico de resposta de erro
+    ResponseError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Erro ao buscar serviços"
+        status:
+          type: boolean
+          example: false
+        data:
+          type: object

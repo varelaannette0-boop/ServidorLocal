@@ -1,93 +1,93 @@
-# paths/servico.yaml
+# paths/orcamento.yaml
 paths:
-  /service:
+  /orcamento:
     get:
-      summary: Listar todos os serviços
+      summary: Listar todos os orcamento
       tags:
-        - Servico
-      description: Retorna uma lista de todos os serviços disponíveis
+        - Orcamento
+      description: Retorna uma lista de todos os orcamento disponíveis
       responses:
         "200":
-          description: Lista de serviços
+          description: Lista de orcamento
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Service"
+                  $ref: "#/components/schemas/Orcamento"
         "404":
-          description: "Nenhum serviço encontrado"
+          description: "Nenhum orcamento encontrado"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseError"
 
-  /service/create:
+  /orcamento/create:
     post:
-      summary: Criar um novo serviço
+      summary: Criar um novo orcamento
       tags:
-        - Servico
-      description: Cria um novo serviço
+        - Orcamento
+      description: Cria um novo orcamento
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateService"
+              $ref: "#/components/schemas/CreateOrcamento"
       responses:
         "200":
-          description: Serviço criado com sucesso
+          description: Orcamento criado com sucesso
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseSucess"
         "400":
-          description: Erro ao criar servico
+          description: Erro ao criar orcamento
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseError"
 
-  /service/get-by-id/{id}:
+  /orcamento/get-by-id/{id}:
     get:
-      summary: Buscar um servico por ID
+      summary: Buscar um orcamento por ID
       tags:
-        - Servico
-      description: Retorna um serviço especificado pelo ID
+        - Orcamento
+      description: Retorna um orcamento especificado pelo ID
       parameters:
         - name: id
           in: path
           required: true
-          description: ID do servico
+          description: ID do orcamento
           schema:
             type: integer
             example: 1
       responses:
         "200":
-          description: Servico encontrado
+          description: Orcamento encontrado
           content:
             application/json:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseSucess"
         "404":
-          description: Servico nao encontrado
+          description: Orcamento nao encontrado
           content:
             application/json:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseError"
-  /service/update/{id}:
+  /orcamento/update/{id}:
     put:
-      summary: Actualizar um servico por ID
+      summary: Actualizar um orcamento por ID
       tags:
-        - Servico
-      description: Actualiza um serviço especificado pelo ID
+        - Orcamento
+      description: Actualiza um orcamento especificado pelo ID
       parameters:
         - name: id
           in: path
           required: true
-          description: ID do servico
+          description: ID do orcamento
           schema:
             type: integer
             example: 1
@@ -97,10 +97,10 @@ paths:
           application/json:
             schema:
               type: object
-              $href: "#/components/schemas/CreateService" #tem mesma informacao de CreateService
+              $href: "#/components/schemas/CreateOrcamento" #tem mesma informacao de CreateUser
       responses:
         "200":
-          description: Servico actualizado com sucesso
+          description: Orcamento actualizado com sucesso
           content:
             application/json:
               schema:
@@ -114,36 +114,36 @@ paths:
                 type: object
                 $ref: "#/components/schemas/ResponseError"
         "404":
-          description: Servico nao encontrado
+          description: Orcamento nao encontrado
           content:
             application/json:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseError"
-  /service/delete/{id}:
+  /orcamento/delete/{id}:
     delete:
-      summary: Apaga um servico
+      summary: Apaga um orcamento
       tags:
-        - Servico
-      description: Apaga um serviço especificado pelo ID
+        - Orcamento
+      description: Apaga um orcamento especificado pelo ID
       parameters:
         - name: id
           in: path
           required: true
-          description: ID do servico
+          description: ID do orcamento
           schema:
             type: integer
             example: 1
       responses:
         "200":
-          description: Servico apagado
+          description: Orcamento apagado
           content:
             application/json:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseSucess"
         "404":
-          description: Servico nao encontrado
+          description: Orcamento nao encontrado
           content:
             application/json:
               schema:

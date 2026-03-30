@@ -1,0 +1,101 @@
+#schema/prestador.yaml
+
+components:
+  schemas:
+    Prestador:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
+        id_utilizadores:
+          type: string
+          example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
+        nif:
+          type: number
+          example: 987654321
+        profissao:
+          type: string
+          example: "Mentiroso"
+        taxa_urgencia:
+          type: number
+          example: 0.2
+        minimo_desconto:
+          type: number
+          example: 7000
+        percentagem_desconto:
+          type: number
+          example: 0.1
+        disponivel:
+          type: boolean
+          example: true
+        enabled:
+          type: boolean
+          example: true
+        created_at:
+          type: string
+          example: "2010-12-10T00:00:00.000Z"
+        updated_at:
+            typr: string
+            example: "2010-12-10T00:00.000Z"
+  
+    CreatePrestador:
+      type: object
+      properties:
+        id_utilizadores:
+          type: string
+          example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
+        nif:
+          type: number
+          example: 987654321
+        profissao:
+          type: string
+          example: "Mentiroso"
+        taxa_urgencia:
+          type: number
+          example: 0.2
+        minimo_desconto:
+          type: number
+          example: 7000
+        percentagem_desconto:
+          type: number
+          example: 0.1
+        disponivel:
+          type: boolean
+          example: true
+        enabled:
+          type: boolean
+          example: true
+      required:
+        - id_utilizadores  
+        - nif  
+        - profissao  
+        - taxa_urgencia  
+        - minimo_desconto  
+        - percentagem_desconto  
+        - disponivel   
+        - enabled  
+
+    #Schema generico para sucesso
+    ResponseSucess:
+      ttpe: object
+      propreties:
+        message:
+          type: string
+          example: "Prestador criado com sucesso"
+        status:
+          type: boolean
+          example: true
+
+    #prestador generico de resposta de erro
+    ResponseError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Erro ao buscar prestador"
+        status:
+          type: boolean
+          example: false
+        data:
+          type: object

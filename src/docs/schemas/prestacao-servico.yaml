@@ -1,0 +1,108 @@
+#schema/prestacao.yaml
+
+components:
+  schemas:
+    Prestacao:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1
+        designacao:
+          type: string
+          example: "proposta"
+        subtotal:
+          type: number
+          example: 12000
+        horas_estimadas:
+          type: string
+          example: 10
+        id_prestador:
+          type: string
+          example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
+        id_servico:
+          type: string
+          example: 2
+        preco_hora:
+          type: number
+          example: 700
+        estado:
+          type: string
+          example: finalizado
+        id_orcamento:
+          type: string
+          example: 2
+        enabled:
+          type: boolean
+          example: true
+        created_at:
+          type: string
+          example: "2010-12-10T00:00:00.000Z"
+        updated_at:
+            typr: string
+            example: "2010-12-10T00:00.000Z"
+  
+    CreatePrestador:
+      type: object
+      properties:
+        designacao:
+          type: string
+          example: "proposta"
+        subtotal:
+          type: number
+          example: 12000
+        horas_estimadas:
+          type: string
+          example: 10
+        id_prestador:
+          type: string
+          example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
+        id_servico:
+          type: string
+          example: 2
+        preco_hora:
+          type: number
+          example: 700
+        estado:
+          type: string
+          example: finalizado
+        id_orcamento:
+          type: string
+          example: 2
+        enabled:
+          type: boolean
+          example: true
+      required:
+        - designacao  
+        - subtotal  
+        - horas_estimadas  
+        - id_prestador  
+        - id_servico  
+        - preco_hora  
+        - estado   
+        - id_orcamento   
+        - enabled  
+
+    #Schema generico para sucesso
+    ResponseSucess:
+      ttpe: object
+      propreties:
+        message:
+          type: string
+          example: "Proposta criado com sucesso"
+        status:
+          type: boolean
+          example: true
+
+    #prestacao generico de resposta de erro
+    ResponseError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Erro ao buscar prestacao"
+        status:
+          type: boolean
+          example: false
+        data:
+          type: object
