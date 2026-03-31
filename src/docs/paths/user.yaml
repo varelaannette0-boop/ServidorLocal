@@ -1,6 +1,6 @@
 # paths/user.yaml
 paths:
-  /user:
+  /users:
     get:
       summary: Listar todos os utilizadores
       tags:
@@ -149,3 +149,40 @@ paths:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseError"
+
+    /users/login:
+      post:
+      summary: Login de um usuario
+      tags:
+       - Users
+      description: Faz login de um usuario
+      requestBody:
+         required: true
+         content:
+           application/json:
+               schema:
+                 $ref: "#/components/schemas/LoginUser"
+      responses:
+        "200":
+          description: Usuario logado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/UserResponseSuccess"
+
+      "404":
+          description: usuario nao encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/UserResponseError"
+
+      "400":
+          description: Erro ao logar usuario
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/UserResponseError"

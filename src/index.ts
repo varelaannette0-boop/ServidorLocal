@@ -7,10 +7,12 @@ import {router as propostaRoter} from "./routes/proposta.route.js"
 import {router as pretacaoServicoRoter} from "./routes/prestacao.servico.route.js"
 import { swaggerSpec } from "./docs/swagger.js";
 import swaggerUi, { serve } from "swagger-ui-express"
-
+import dotenv from "dotenv"
 
 const app = express();
 app.use(express.json())
+
+dotenv.config()
 
 app.use("/service", serviceRouter)
 app.use("/orcamento", orcamentoRoter)

@@ -83,6 +83,17 @@ components:
         - localidade  
         - enabled  
 
+      LoginUser:
+         type: object
+         properties:
+            email:
+              type: string
+              example: "user@example.com"
+            password:
+              type: string
+              example: "senha123"
+
+
     #Schema generico para sucesso
     ResponseSucess:
       type: object
