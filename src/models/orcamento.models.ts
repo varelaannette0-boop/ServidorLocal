@@ -1,3 +1,4 @@
+import type { QueryResult } from "mysql2"
 import db from "../lib/db.js"
 import type { OrcamentoDBType } from "../utils/types.js"
 import { generateUUID } from "../utils/uuid.js"
@@ -90,5 +91,27 @@ export const OrcamentoModel = {
             console.log(err)
             return null
         }
-    }
+    },
+
+
+    async atualizarTotal(id: string, total: number) {
+        try {
+            const [rows] = await db.execute(
+                `UPDATE tbl_orcamento 
+                 SET total = ?,
+                 updated_at = ?
+                 WHERE id = ?`,
+                [
+                    total,
+                    new Date(),
+                    id]
+            )
+            return rows;
+        } catch (err) {
+            console.log(err);
+            return null;
+        }
+    },
+
+
 }

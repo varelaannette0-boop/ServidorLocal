@@ -1,5 +1,5 @@
 import db from "../lib/db.js"
-import type { PropostaDBType } from "../utils/types.js"
+import type { EstadoType, PropostaDBType } from "../utils/types.js"
 import { generateUUID } from "../utils/uuid.js"
 
 
@@ -51,6 +51,46 @@ export const PropostaModel = {
             return null
         }
     },
+
+
+    async aceitarProposta(idAceitado: string, estado: EstadoType){
+        
+        try {
+            const [rows] = await db.execute(
+                `UPDATE tbl_proposta 
+                SET 
+                estado = "Rejeitado",
+                id_prestacao_servico_estado = "Rejeitado"
+                updated_at = ?
+                `,[
+                    new Date()
+                ]
+            )
+
+            const [rowsAceitadas] = await db.execute(
+                `UPDATE tbl_proposta
+                SET 
+                    estado = ?,  
+                    id_prestacao_servico_estado = ?,
+                    updated_at = ?
+                    WHERE id = ?`
+
+                [
+                    estado,
+                    estado,
+                    new Date(),
+                    idAceitado
+                ]
+            )
+
+            console.log({ rows })
+            return rowsAceitadas
+        } catch (err) {
+            console.log(err)
+            return null
+        }
+    },
+
 
     async update(id: string, proposta: PropostaDBType) {
         try {

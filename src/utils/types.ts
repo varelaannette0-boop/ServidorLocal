@@ -98,3 +98,15 @@ export interface PropostaDBType {
     created_at: string,
     updated_at: string
 }
+
+
+export interface EstadoType{
+    estado: "Aceitado" | "Pendente" | "Rejeitado"
+}
+
+export enum EstadoPrestacaoServico {
+    PENDENTE = "pendente",
+    FINALIZADO = "finalizado",
+    EM_PROGRESSO = "em_progresso",
+    CANCELADO = "cancelado"
+}

@@ -1,8 +1,8 @@
 import db from "../lib/db.js"
-import type { serviceDBType } from "../utils/types.js"
+import type { ServicoDBType } from "../utils/types.js"
 
 export const ServiceModel = {
-    async create(newService: serviceDBType) {
+    async create(newService: ServicoDBType) {
         try {
             const query = `INSERT INTO tbl_servicos VALUES (?, ?, ?, ?, ?, ?, ?)`
 
@@ -56,7 +56,7 @@ export const ServiceModel = {
         }
     },
 
-    async update(id: string, servicoAtualizado: serviceDBType) {
+    async update(id: string, servicoAtualizado: ServicoDBType) {
         try {
             const query = `UPDATE tbl_servicos 
                         SET 

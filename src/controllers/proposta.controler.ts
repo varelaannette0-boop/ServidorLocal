@@ -1,6 +1,6 @@
 import type { Request, Response } from "express"
 import { PropostaModel } from "../models/proposta.models.js"
-import type { PropostaDBType } from "../utils/types.js"
+import type { EstadoType, PropostaDBType } from "../utils/types.js"
 
 
 export const PropostaController = {
@@ -59,6 +59,41 @@ export const PropostaController = {
             return res.status(500).json({ message: "Erro ao atualizar proposta" })
         }
     },
+
+
+    async aceitar(req: Request, res: Response){
+        const { id } = req.params;
+
+        const resposta = req.body as EstadoType;
+
+        try{
+            const aceitarPropostaResponse = await PropostaModel.aceitarProposta(id as string, resposta)
+
+            if (!aceitarPropostaResponse) {
+                return res.status(400).json(
+                    { 
+                        status:             "error",
+                        message:            `Erro ao ${resposta} proposta`,
+                        data:               null}
+                    )}
+            
+            return (res.status(200).json(
+                { 
+                    status:                 "success",
+                    message:                `Proposta ${resposta} com sucesso`, 
+                    data:                   aceitarPropostaResponse }
+                ))
+        }catch(err){
+            console.log(err)
+            return (res.status(500).json(
+                { 
+                    status:                 "error",
+                    message:                `Erro ao ${resposta} proposta`, 
+                    data:                   null}
+                ))
+        }
+    },
+
 
     async delete(req: Request, res: Response) {
         const { id } = req.params

@@ -108,5 +108,21 @@ export const PrestacaoServicoModel = {
             console.log(err)
             return null
         }
+    },
+
+    async getByIdOrcamento(idOrcamento: string) {
+    try {
+        const [rows] = await db.execute(
+            `SELECT * 
+             FROM tbl_prestacao_servico
+             WHERE id_orcamento = ?`,
+            [idOrcamento]
+        );
+
+        return rows;
+    } catch (err) {
+        console.log(err);
+        return null;
     }
+}
 }
