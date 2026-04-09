@@ -53,43 +53,40 @@ export const PropostaModel = {
     },
 
 
-    async aceitarProposta(idAceitado: string, estado: EstadoType){
-        
-        try {
-            const [rows] = await db.execute(
-                `UPDATE tbl_proposta 
-                SET 
+   async aceitarProposta(idAceitado: string, estado: EstadoType) {
+    try {
+        // Rejeitar outras propostas do mesmo serviço
+        await db.execute(
+            `UPDATE tbl_propostas 
+             SET 
                 estado = "Rejeitado",
-                id_prestacao_servico_estado = "Rejeitado"
+                id_prestacao_servico_estado = "Rejeitado",
                 updated_at = ?
-                `,[
-                    new Date()
-                ]
-            )
+             WHERE id_prestacao_servico = (
+                SELECT id_prestacao_servico 
+                FROM tbl_propostas 
+                WHERE id = ?
+             )`,
+            [new Date(), idAceitado]
+        );
 
-            const [rowsAceitadas] = await db.execute(
-                `UPDATE tbl_proposta
-                SET 
-                    estado = ?,  
-                    id_prestacao_servico_estado = ?,
-                    updated_at = ?
-                    WHERE id = ?`
+        // Aceitar proposta escolhida
+        const [rowsAceitadas] = await db.execute(
+            `UPDATE tbl_propostas
+             SET 
+                estado = ?,  
+                id_prestacao_servico_estado = ?,
+                updated_at = ?
+             WHERE id = ?`,
+            [estado, estado, new Date(), idAceitado]
+        );
 
-                [
-                    estado,
-                    estado,
-                    new Date(),
-                    idAceitado
-                ]
-            )
-
-            console.log({ rows })
-            return rowsAceitadas
-        } catch (err) {
-            console.log(err)
-            return null
-        }
-    },
+        return rowsAceitadas;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+},
 
 
     async update(id: string, proposta: PropostaDBType) {
