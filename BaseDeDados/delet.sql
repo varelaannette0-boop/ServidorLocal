@@ -1,0 +1,1 @@
+DELETE tbl_servicos

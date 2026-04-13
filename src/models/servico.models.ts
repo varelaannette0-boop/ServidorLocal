@@ -1,5 +1,6 @@
-import db from "../lib/db.js"
-import type { ServicoDBType } from "../utils/types.js"
+import type { get } from "node:http";
+import db from "../lib/db.js";
+import type { ServicoDBType, ServicoDetalhadoType } from "../utils/types.js";
 
 export const ServiceModel = {
     async create(newService: ServicoDBType) {
@@ -98,6 +99,35 @@ export const ServiceModel = {
             return rows[0]?.affectedRows === 0 ? null : rows
         } catch (error) {
             console.log(error)
+            return null
+        }
+    },
+
+    async getAllServicoDetalhado(limit: number, offset: number): Promise<ServicoDetalhadoType[] | null>{
+        try {
+            const query= `
+               SELECT
+                   id
+                   nome
+                   descricao
+                   designacao as designacao_categoria
+                   icone as icone_empresa
+                   designacao as designacao_empresa
+                   icone as icone_empresa
+                   enabled
+                FROM tbl_servicos s
+                INNER JOIN tbl_categoria c ON c. id = s. id_categoria
+                INNER JOIN tbl_empresa e ON e. id =
+            ´
+
+            const values = [limit, offset]
+
+            const [rows] = await db.execute<ServicoDetalhadoType<[] & RowDataPacket[]>(query, values)
+
+            return Array.isArray(rows) && rows.length> 0 ? rows as ServicoDetalhadoType
+
+        }catch (error) {
+            console.log
             return null
         }
     }

@@ -1,22 +1,31 @@
-# paths/proposta.yaml
+# create: "/create",
+# getAll: "/",
+# getById: "/:id",
+# update: "/update/:id",
+# delete: "/delete/:id"
+
 paths:
   /proposta:
     get:
-      summary: Listar todos as propostas
+      summary: Buscar todas as propostas
       tags:
         - Proposta
-      description: Retorna uma lista de todos as propostas disponíveis
+      description: Retorna uma lista de todas as propostas
       responses:
         "200":
-          description: Lista de propostas
+          description: Propostas encontradas com sucesso
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Proposta"
-        "404":
-          description: "Nenhum proposta encontrado"
+                $ref: "#/components/schemas/ResponseSuccess"
+        "400":
+          description: Dados de proposta inválidos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseError"
+        "500":
+          description: Erro ao buscar propostas
           content:
             application/json:
               schema:
@@ -24,10 +33,10 @@ paths:
 
   /proposta/create:
     post:
-      summary: Criar um novo proposta
+      summary: Criar uma nova proposta
       tags:
         - Proposta
-      description: Cria um novo proposta
+      description: Cria uma nova proposta
       requestBody:
         required: true
         content:
@@ -36,12 +45,18 @@ paths:
               $ref: "#/components/schemas/CreateProposta"
       responses:
         "200":
-          description: Proposta criado com sucesso
+          description: Proposta criada com sucesso
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ResponseSucess"
+                $ref: "#/components/schemas/ResponseSuccess"
         "400":
+          description: Dados de proposta inválidos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseError"
+        "500":
           description: Erro ao criar proposta
           content:
             application/json:
@@ -50,102 +65,138 @@ paths:
 
   /proposta/get-by-id/{id}:
     get:
-      summary: Buscar um proposta por ID
+      summary: Buscar uma proposta por ID
       tags:
         - Proposta
-      description: Retorna um proposta especificado pelo ID
+      description: Retorna uma proposta por ID
       parameters:
         - name: id
           in: path
           required: true
-          description: ID do proposta
           schema:
-            type: integer
-            example: 1
+            type: string
+            example: "1"
       responses:
         "200":
-          description: Servico encontrado
+          description: Proposta encontrada com sucesso
           content:
             application/json:
               schema:
-                type: object
-                $ref: "#/components/schemas/ResponseSucess"
-        "404":
-          description: Servico nao encontrado
+                $ref: "#/components/schemas/ResponseSuccess"
+        "400":
+          description: Dados de proposta inválidos
           content:
             application/json:
               schema:
-                type: object
                 $ref: "#/components/schemas/ResponseError"
+        "500":
+          description: Erro ao buscar proposta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseError"
+
   /proposta/update/{id}:
     put:
-      summary: Actualizar um proposta por ID
+      summary: Atualizar uma proposta
       tags:
         - Proposta
-      description: Actualiza um proposta especificado pelo ID
+      description: Atualiza uma proposta
       parameters:
         - name: id
           in: path
           required: true
-          description: ID do proposta
           schema:
-            type: integer
-            example: 1
+            type: string
+            example: "1"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              $href: "#/components/schemas/CreateProposta" #tem mesma informacao de CreateService
+              $ref: "#/components/schemas/CreateProposta"
       responses:
         "200":
-          description: Servico actualizado com sucesso
+          description: Proposta atualizada com sucesso
           content:
             application/json:
               schema:
-                type: object
-                $ref: "#/components/schemas/ResponseSucess"
+                $ref: "#/components/schemas/ResponseSuccess"
         "400":
-          description: Dados invalidos
+          description: Dados de proposta inválidos
           content:
             application/json:
               schema:
-                type: object
                 $ref: "#/components/schemas/ResponseError"
-        "404":
-          description: Servico nao encontrado
+        "500":
+          description: Erro ao atualizar proposta
           content:
             application/json:
               schema:
-                type: object
                 $ref: "#/components/schemas/ResponseError"
+
   /proposta/delete/{id}:
     delete:
-      summary: Apaga um proposta
+      summary: Deletar uma proposta
       tags:
         - Proposta
-      description: Apaga um proposta especificado pelo ID
+      description: Deleta uma proposta
       parameters:
         - name: id
           in: path
           required: true
-          description: ID do proposta
           schema:
-            type: integer
-            example: 1
+            type: string
+            example: "1"
       responses:
         "200":
-          description: Servico apagado
+          description: Proposta deletada com sucesso
           content:
             application/json:
               schema:
-                type: object
-                $ref: "#/components/schemas/ResponseSucess"
-        "404":
-          description: Servico nao encontrado
+                $ref: "#/components/schemas/ResponseSuccess"
+        "400":
+          description: Dados de proposta inválidos
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/ResponseError"
+        "500":
+          description: Erro ao deletar proposta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseError"
+
+  /proposta/accept/{id}:
+    put:
+      summary: Aceitar uma proposta
+      tags:
+        - Proposta
+      description: Aceita uma proposta
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "1"
+      responses:
+        "200":
+          description: Proposta aceita com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSuccess"
+        "400":
+          description: Dados de proposta inválidos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseError"
+        "500":
+          description: Erro ao aceitar proposta
+          content:
+            application/json:
+              schema:
                 $ref: "#/components/schemas/ResponseError"

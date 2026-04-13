@@ -1,8 +1,9 @@
+import type { Request, Response } from "express"
+import type { UserType } from "../utils/types.js"
 import { UserModel } from "../models/users.models.js"
 import { comparePassword } from "../utils/password.js"
-import type { UserType } from "../utils/types.js"
-import type { Request, Response } from "express"
 import jwt from "jsonwebtoken"
+
 export const UserController = {
     async create(req: Request, res: Response) {
         const user: UserType = req.body
@@ -22,7 +23,7 @@ export const UserController = {
         res.json(createUserResponse)
     },
 
-     async getAll(req: Request, res: Response) {
+    async getAll(req: Request, res: Response) {
         const getAllUsersResponse = await UserModel.getAll()
 
         if (!getAllUsersResponse) {
@@ -40,7 +41,7 @@ export const UserController = {
         })
     },
 
-    async getByID(req: Request, res: Response) {
+    async getById(req: Request, res: Response) {
         const { id } = req.params
 
         if (!id) {
@@ -106,23 +107,23 @@ export const UserController = {
         })
     },
 
-    async login(req: Request, res: Response){
-        const {email, password} = req.body
+    async login(req: Request, res: Response) {
+        const { email, password } = req.body
 
         if (!email || !password) {
             return res.status(400).json({
                 status: "error",
-                message: "credenciais invalidos",
+                message: "Credenciais invalidos",
                 data: null
             })
         }
 
-        const userData = await UserModel.getByEmail (email as string)
+        const userData: UserType | null = await UserModel.getByEmail(email as string)
 
         if (!userData) {
             return res.status(404).json({
                 status: "error",
-                message: "Não existe nenhuma conta com este email",
+                message: "Nao Existe nenhuma conta com este email.",
                 data: null
             })
         }
@@ -130,7 +131,7 @@ export const UserController = {
         const isPasswordValid = await comparePassword(password, userData.password)
 
         if (!isPasswordValid) {
-             return res.status(401).json({
+            return res.status(401).json({
                 status: "error",
                 message: "Credenciais invalidos",
                 data: null
@@ -143,17 +144,74 @@ export const UserController = {
             nome: userData.nome
         }
 
-        const token = jwt.sign(payload, process.env.JWT_SECRET as string, {expiresIn: "1h"})
+        const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: "1h" })
 
-         return res.status(200).json({
-                status: "success",
-                message: "Login realizado com sucesso",
-                data: {
-                    token,
-                    user: payload
-                }
+        return res.status(200).json({
+            status: "success",
+            message: "Login realizado com sucesso",
+            data: {
+                token,
+                user: payload
+            }
+        })
+    },
+
+    async resetPassword(req: Request, res: Response) {
+        const { id } = req.params
+
+        const updatedUser: UserType = req.body
+
+        if (!id) {
+            return res.status(400).json({
+                status: "error",
+                message: "ID obrigatorio",
+                data: null
             })
+        }
 
+        if (!updatedUser) {
+            return res.status(400).json({
+                status: "error",
+                message: "Dados de utilizador invalidos",
+                data: null
+            })
+        }
+
+        const getUserByIdResponse = await UserModel.get(id as string)
+
+        if (!getUserByIdResponse) {
+            return res.status(404).json({
+                status: "error",
+                message: "Utilizador nao encontrado",
+                data: null
+            })
+        }
+
+        const comparePasswordResponse = await comparePassword(updatedUser.password, getUserByIdResponse.password)
+
+        if (!comparePasswordResponse) {
+            return res.status(400).json({
+                status: "error",
+                message: "Password antiga invalida",
+                data: null
+            })
+        }
+
+        const resetPasswordResponse = await UserModel.resetPassword(id as string, updatedUser.password)
+
+        if (!resetPasswordResponse) {
+            return res.status(400).json({
+                status: "error",
+                message: "Erro ao atualizar utilizador",
+                data: null
+            })
+        }
+
+        return res.status(200).json({
+            status: "success",
+            message: "Utilizador atualizado com sucesso",
+            data: resetPasswordResponse
+        })
     },
 
     async delete(req: Request, res: Response) {
@@ -176,9 +234,11 @@ export const UserController = {
                 data: null
             })
         }
+
+        return res.status(200).json({
+            status: "success",
+            message: "Utilizador apagado com sucesso",
+            data: deleteUserResponse
+        })
     }
 }
-
-
-
-   
