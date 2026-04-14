@@ -1,6 +1,7 @@
 import type { get } from "node:http";
 import db from "../lib/db.js";
 import type { ServicoDBType, ServicoDetalhadoType } from "../utils/types.js";
+import type { RowDataPacket } from "mysql2";
 
 export const ServiceModel = {
     async create(newService: ServicoDBType) {
@@ -103,31 +104,34 @@ export const ServiceModel = {
         }
     },
 
-    async getAllServicoDetalhado(limit: number, offset: number): Promise<ServicoDetalhadoType[] | null>{
+    async getAllServicoDetalhado(limit: number, offset: number): Promise<ServicoDetalhadoType[] | null> {
         try {
-            const query= `
-               SELECT
-                   id
-                   nome
-                   descricao
-                   designacao as designacao_categoria
-                   icone as icone_empresa
-                   designacao as designacao_empresa
-                   icone as icone_empresa
-                   enabled
+            const query = `
+                SELECT DISTINCT 
+                    s.id as id_servico,
+                    s.nome as servico_nome
+                    s.descricao as servico_descricao
+                    c.designacao as designacao_categoria
+                    c.icone as icone_categoria
+                    e.id as id_empresa
+                    e.designacao as desginacao_empresa
+                    e.icone as icone_empresa
+                    s.enabled
                 FROM tbl_servicos s
-                INNER JOIN tbl_categoria c ON c. id = s. id_categoria
-                INNER JOIN tbl_empresa e ON e. id =
-            ´
-
+                INNER JOIN tbl_categoria c ON c.id = s.id_categoria
+                INNER JOIN table_prestacao_servico ps ON s.id = ps.id_servico
+                INNER JOIN tbl_empresa e ON e.id = ps.id_empresa
+                WHERE s.enabled = true
+                LIMIT ? OFFSET ?
+            `
             const values = [limit, offset]
 
-            const [rows] = await db.execute<ServicoDetalhadoType<[] & RowDataPacket[]>(query, values)
+            const [rows] = await db.execute<ServicoDetalhadoType[] & RowDataPacket[]>(query, values)
 
-            return Array.isArray(rows) && rows.length> 0 ? rows as ServicoDetalhadoType
+            return Array.isArray(rows) && rows.length > 0 ? rows as ServicoDetalhadoType[] : null
 
-        }catch (error) {
-            console.log
+        } catch (error) {
+            console.log(error)
             return null
         }
     }

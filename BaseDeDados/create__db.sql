@@ -78,12 +78,54 @@ id_prestacao_servico INTEGER NOT NULL,
 	created_at DATETIME NOT NULL,
 	updated_at DATETIME NOT NULL
 );
+CREATE TABLE IF NOT EXISTS `tbl_empresa` (
+     id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT UNIQUE,
+     designacao VARCHAR(255) NOT NULL,
+     descricao VARCHAR(255),
+     localizacao Varchar(255) NOT NULL,
+     nif DOUBLE NOT NULL UNIQUE,
+     icone VARCHAR(255) ,
+     id_utilizador VARCHAR(255) NOT NULL,
+     enabled BOOLEAN NOT NULL,
+     created_at DATETIME NOT NULL,
+     updated_at DATETIME NOT NULL
+);
 
+CREATE TABLE IF NOT EXISTS `tbl_categoria` (
+     id INTEGER NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
+     designacao VARCHAR(255) NOT NULL,
+     icone VARCHAR(255),
+     created_at DATETIME NOT NULL,
+     updated_at DATETIME NOT NULL
+
+);
+
+ALTER TABLE tbl_empresa
+  ADD CONSTRAINT fk_utilizador_empresa
+  FOREIGN KEY (id_utilizador)
+  REFERENCES tbl_utilizadores(id)
+;
+
+ALTER TABLE tbl_servicos
+    DROP COLUMN categoria,
+    ADD COLUMN id_categoria INTEGER AFTER descricao,
+    ADD CONSTRAINT fk_categoria_servico
+    FOREIGN KEY (id_categoria)
+    REFERENCES tbl_categoria (id)
+;
+
+ALTER TABLE tbl_prestacao_servico
+  ADD COLUMN urgente BOOLEAN AFTER id_orcamento
+;
+    
+    
 ALTER TABLE tbl_proposta
-ADD CONSTRAINT id_prestacao_servico
+ADD CONSTRAINT fk_prestacao_servico
 FOREIGN KEY (id_prestacao_servico)
 REFERENCES tbl_prestacao_servico(id)
 ;
+
+
 
 
 ALTER TABLE tbl_prestacao_servico
