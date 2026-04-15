@@ -125,8 +125,24 @@ FOREIGN KEY (id_prestacao_servico)
 REFERENCES tbl_prestacao_servico(id)
 ;
 
+ALTER TABLE tbl_utilizadores
+    ADD COLUMN `role` ENUM("cliente", "admin", "prestador", "empresa") default "cliente"
+;
 
+ALTER TABLE tbl_prestadores
+   ADD COLUMN id_empresa INTEGER,
+   ADD CONSTRAINT fk_empresa_prestadores
+   FOREIGN KEY (id_empresa)
+   REFERENCES tbl_empresa(id)
+;
 
+ALTER TABLE tbl_prestacao_servico
+       ADD COLUMN id_empresa INTEGER,
+       ADD COLUMN tipo_prestador ENUM ("empresa", "particular"),
+       ADD CONSTRAINT fk_empresa_prestacao_servico
+       FOREIGN KEY (id_empresa)
+       REFERENCES tbl_empresa(id)
+;
 
 ALTER TABLE tbl_prestacao_servico
 ADD CONSTRAINT id_prestador

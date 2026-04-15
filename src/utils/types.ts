@@ -177,3 +177,11 @@ export interface EmpresaDBType {
     created_at: string,
     updated_at: string
 }
+
+export interface PrestacaoServicoByCategoriaType{
+    id: string,
+    designacao: string
+    icone: string,
+    created_at: string,
+    updated_at: string
+}
