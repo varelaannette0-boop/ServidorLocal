@@ -57,3 +57,23 @@ export function authorize(roles: string[]) {
     next();
   };
 }
+
+export function isOwner(model: any, field: string) {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.user?.id
+
+    const {id} = req.params
+
+    const  entity = await model.get(id as string)
+
+    if (!entity) return res.status(404).json({message: "Entidade nao encontrada"})
+
+    if (!userId) return res.status(404).json({message: "Utilizador nao authenticado"})
+
+    if (!entity[field]) return res.status(401).json({message: "Permisao insuficiente"})
+
+      next()
+
+
+  }
+}

@@ -132,19 +132,22 @@ export const PrestacaoServicoModel = {
         }
     },
 
-    async getAllPrestacoesServicoByCategoria(limit: number, offset: number) {
+    async getAllPrestacoesServicoByCategoriaDetalhada(limit: number, offset: number, categoria: string) {
 
         try {
             const query = `
             SELECT DISTINCT
-                ps.id AS id_prestacao,
-                ps.designacao,
-                s.nome AS servico,
-                c.nome AS categoria
+                ps.id AS id_prestacao_servico,
+                ps.designacao as descricao,
+                s.nome AS nome_servico,
+                c.designacao as nome_categoria,
+                ps.created_at as data_pedido,
+                ps.urgente
             FROM tbl_prestacao_servico ps
-            INNER JOIN tbl_servico s ON ps.id_servico = s.id
-            INNER JOIN tbl_categoria c ON s.id_categoria = c.id
-            WHERE c.nome = ?
+            INNER JOIN tbl_categoria c ON c.id = s.id_categoria AND c.id = ?
+            INNER JOIN tbl_servicos s ON ps.id_servico = s.id
+            ORDER BY ps.created_at DESC
+            LIMIT ? OFFSET ?
         `;
 
         const [rows] = await db.execute<PrestacaoServicoByCategoriaType[] & RowDataPacket[]>(
