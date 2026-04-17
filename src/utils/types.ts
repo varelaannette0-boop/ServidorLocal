@@ -189,3 +189,25 @@ export interface PrestacaoServicoByCategoriaType{
 
     
 }
+
+export interface EmpresaDBType {
+    id: string,
+    designacao: string,
+    descricao: string,
+    localizacao: string,
+    nif: string,
+    icone: string,
+    id_utilizador: string,
+    enabled: boolean,
+    created_at: string,
+    updated_at: string
+}
+
+export interface CategoriaDBType {
+    id: string,
+    designacao: string,
+    icone: string,
+    created_at: string,
+    updated_at: string
+
+}

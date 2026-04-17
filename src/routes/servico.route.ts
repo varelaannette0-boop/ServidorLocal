@@ -1,7 +1,8 @@
 import { Router } from "express"
 import { ServicoController } from "../controllers/servico.controler.js"
-import AuthMiddleware, { authorize } from "../security/auth.middleware.js"
+import AuthMiddleware, { authorize, isOwner } from "../security/auth.middleware.js"
 import { Role } from "../utils/types.js"
+import { PropostaModel } from "../models/proposta.models.js"
 
 const ServiceRoute = {
     create: "/create",
@@ -18,8 +19,8 @@ router.get(ServiceRoute.getAll, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTA
 router.get(ServiceRoute.getById, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), ServicoController.get)
 router.get(ServiceRoute.getAllDetailed, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), ServicoController.getAllServicoDetalhado)
 router.post(ServiceRoute.create, authorize([Role.ADMIN]), ServicoController.createServico)
-router.put(ServiceRoute.update, authorize([Role.ADMIN]), ServicoController.update)
-router.delete(ServiceRoute.delete, authorize([Role.ADMIN]), ServicoController.delete)
+router.put(ServiceRoute.update, authorize([Role.ADMIN]), isOwner(PropostaModel, "owner"), ServicoController.update)
+router.delete(ServiceRoute.delete, authorize([Role.ADMIN]), isOwner(PropostaModel, "owner"), ServicoController.delete)
 
 
 export { router }

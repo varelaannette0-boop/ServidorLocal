@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { UserController } from "../controllers/users.controler.js";
-import AuthMiddleware, { authorize } from "../security/auth.middleware.js";
+import AuthMiddleware, { authorize, isOwner } from "../security/auth.middleware.js";
 import { Role } from "../utils/types.js";
+import { PropostaModel } from "../models/proposta.models.js";
 
 const UserRoute = {
     create: "/create",
@@ -25,9 +26,9 @@ router.get(UserRoute.getAll, authorize([Role.ADMIN]), UserController.getAll)
 
 router.get(UserRoute.getById, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), UserController.getById)
 
-router.put(UserRoute.update, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), UserController.update)
+router.put(UserRoute.update, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), isOwner(PropostaModel, "owner"), UserController.update)
 
-router.delete(UserRoute.delete, authorize([Role.ADMIN]), UserController.delete)
+router.delete(UserRoute.delete, authorize([Role.ADMIN]), isOwner(PropostaModel, "owner"), UserController.delete)
 
 router.put(UserRoute.resetPassword, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), UserController.resetPassword)
 

@@ -100,6 +100,13 @@ CREATE TABLE IF NOT EXISTS `tbl_categoria` (
 
 );
 
+ALTER TABLE tbl_prestadores
+    ADD COLUMN id_utilizador VARCHAR(255) NOT NULL DEFAULT "teste" AFTER id_empresa,
+    ADD CONSTRAINT fk_utilizadores_prestadores
+    FOREIGN KEY (id_utilizador)
+    REFERENCES tbl_utilizadores(id)
+;
+
 ALTER TABLE tbl_empresa
   ADD CONSTRAINT fk_utilizador_empresa
   FOREIGN KEY (id_utilizador)
