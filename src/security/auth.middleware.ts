@@ -70,7 +70,7 @@ export function isOwner(model: any, field: string) {
 
     if (!userId) return res.status(404).json({message: "Utilizador nao authenticado"})
 
-    if (!entity[field]) return res.status(401).json({message: "Permisao insuficiente"})
+    if (entity[field] !== userId) return res.status(403).json({message: "Permissao insuficiente"})
 
       next()
 

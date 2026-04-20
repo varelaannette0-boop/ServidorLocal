@@ -1,0 +1,75 @@
+#schema/orcamento.yaml
+
+components:
+schemas:
+Empresa:
+type: object
+properties:
+id:
+type: string
+example: 2
+designacao:
+type: string
+example: "Construcao civl"
+descricao:
+type: string
+example: "empresa atua na area da construcao civil"
+localizacao:
+type: string
+example: "Praia"
+nif:
+type: string
+example: 123456789
+id_utilizador:
+type: string
+example: 987654321
+icone:
+type: string
+example: "Image"
+created_at:
+type: string
+example: "2010-12-10T00:00:00.000Z"
+updated_at:
+typr: string
+example: "2010-12-10T00:00.000Z"
+
+CreateCategoria:
+type: object
+properties:
+total:
+type: number
+example: 1000
+id_utilizadores:
+type: string
+example: "M002b "
+enabled:
+type: boolean
+example: true
+required:
+- total
+- id_utilizadores
+- enabled
+
+#Schema generico para sucesso
+ResponseSucess:
+ttpe: object
+propreties:
+message:
+type: string
+example: "Categoria criado com sucesso"
+status:
+type: boolean
+example: true
+
+#orcamento generico de resposta de erro
+ResponseError:
+type: object
+properties:
+message:
+type: string
+example: "Erro ao buscar Categoria"
+status:
+type: boolean
+example: false
+data:
+type: object

@@ -1,32 +1,41 @@
-import type { RowDataPacket } from "mysql2";
-import db from "../lib/db.js";
-import type { EmpresaDBType } from "../utils/types.js";
-import { generateUUID } from "../utils/uuid.js";
+import type { RowDataPacket } from "mysql2"
+import db from "../lib/db.js"
+import type { EmpresaDBType, CreateEmpresaType } from "../utils/types.js"
+import { generateUUID } from "../utils/uuid.js"
 
+export const EmpresaModel = {
 
-
-export const EmpresaModel= {
-     async create(empresa: EmpresaDBType): Promise<EmpresaDBType | null> {
+    async create(empresa: CreateEmpresaType): Promise<EmpresaDBType | null> {
         try {
             const id = generateUUID()
-            const [rows] = await db.execute(
+            const now = new Date()
+
+            await db.execute(
                 `INSERT INTO tbl_empresas 
+                (id, designacao, descricao, localizacao, nif, icone, id_utilizador, enabled, created_at, updated_at)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                 [
-                    generateUUID(),
+                    id,
                     empresa.designacao,
                     empresa.descricao,
                     empresa.localizacao,
                     empresa.nif,
                     empresa.icone,
                     empresa.id_utilizador,
-                    empresa.enabled,
-                    new Date(),
-                    new Date()
+                    true,
+                    now,
+                    now
                 ]
             )
 
-            return { ...empresa, id } as EmpresaDBType
+            return {
+                id,
+                ...empresa,
+                enabled: true,
+                created_at: now,
+                updated_at: now
+            }
+
         } catch (err) {
             console.log(err)
             return null
@@ -34,36 +43,41 @@ export const EmpresaModel= {
     },
 
     async getAll(): Promise<EmpresaDBType[] | null> {
-        const [rows] = await db.execute<EmpresaDBType[] & RowDataPacket[]>(
-            "SELECT * FROM tbl_empresas"
-        )
+        try {
+            const [rows] = await db.execute<EmpresaDBType[] & RowDataPacket[]>(
+                "SELECT * FROM tbl_empresas"
+            )
 
-        return rows as EmpresaDBType[]
+            return rows
+        } catch (err) {
+            console.log(err)
+            return null
+        }
     },
 
     async get(id: string): Promise<EmpresaDBType | null> {
         try {
             const [rows] = await db.execute<EmpresaDBType[] & RowDataPacket[]>(
-                `SELECT * FROM tbl_empresas WHERE id = ?`,
+                "SELECT * FROM tbl_empresas WHERE id = ?",
                 [id]
             )
 
             const empresa = rows[0]
 
-           if (!empresa) return null
+            if (!empresa) return null
 
-        return empresa
-    } catch (err) {
-        console.log(err)
-        return null
-    }
-},
+            return empresa
+        } catch (err) {
+            console.log(err)
+            return null
+        }
+    },
 
-    async update(id: string, empresa: Partial<EmpresaDBType>) {
+    async update(id: string, empresa: Partial<CreateEmpresaType>) {
         try {
             const query = `
                 UPDATE tbl_empresas 
-                SET designacao = ?, descricao = ?, localizacao = ?, nif = ?, icone = ?, id_utilizador = ?, enabled = ?, updated_at = ?
+                SET designacao = ?, descricao = ?, localizacao = ?, nif = ?, icone = ?, updated_at = ?
                 WHERE id = ?
             `
 
@@ -73,8 +87,6 @@ export const EmpresaModel= {
                 empresa.localizacao!,
                 empresa.nif!,
                 empresa.icone!,
-                empresa.id_utilizador!,
-                empresa.enabled!,
                 new Date(),
                 id
             ]
@@ -90,7 +102,7 @@ export const EmpresaModel= {
     async delete(id: string) {
         try {
             const rows: any = await db.execute(
-                `DELETE FROM tbl_empresas WHERE id = ?`,
+                "DELETE FROM tbl_empresas WHERE id = ?",
                 [id]
             )
 
