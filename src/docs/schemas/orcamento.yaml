@@ -1,29 +1,30 @@
-#schema/orcamento.yaml
-
 components:
   schemas:
+
     Orcamento:
       type: object
       properties:
         id:
           type: string
-          example: 2
+          example: "2"
         total:
           type: number
           example: 1000
         id_utilizadores:
           type: string
-          example: "M002b "
+          example: "M002b"
         enabled:
           type: boolean
           example: true
         created_at:
           type: string
+          format: date-time
           example: "2010-12-10T00:00:00.000Z"
         updated_at:
-            typr: string
-            example: "2010-12-10T00:00.000Z"
-  
+          type: string
+          format: date-time
+          example: "2010-12-10T00:00:00.000Z"
+
     CreateOrcamento:
       type: object
       properties:
@@ -32,19 +33,18 @@ components:
           example: 1000
         id_utilizadores:
           type: string
-          example: "M002b "
+          example: "M002b"
         enabled:
           type: boolean
           example: true
       required:
-        - total  
-        - id_utilizadores  
-        - enabled  
+        - total
+        - id_utilizadores
+        - enabled
 
-    #Schema generico para sucesso
-    ResponseSucess:
-      ttpe: object
-      propreties:
+    ResponseSuccess:
+      type: object
+      properties:
         message:
           type: string
           example: "Orcamento criado com sucesso"
@@ -52,7 +52,6 @@ components:
           type: boolean
           example: true
 
-    #orcamento generico de resposta de erro
     ResponseError:
       type: object
       properties:

@@ -1,7 +1,6 @@
-#schema/proposta.yaml
-
 components:
   schemas:
+
     Proposta:
       type: object
       properties:
@@ -10,7 +9,7 @@ components:
           example: 1
         id_prestacao_servico:
           type: string
-          example: 1
+          example: "1"
         preco_hora:
           type: number
           example: 10000
@@ -19,23 +18,25 @@ components:
           example: 12
         estado:
           type: string
-          example: aceito
+          example: "aceito"
         enabled:
           type: boolean
           example: true
         created_at:
           type: string
+          format: date-time
           example: "2010-12-10T00:00:00.000Z"
         updated_at:
-            typr: string
-            example: "2010-12-10T00:00.000Z"
-  
+          type: string
+          format: date-time
+          example: "2010-12-10T00:00:00.000Z"
+
     CreateProposta:
       type: object
       properties:
         id_prestacao_servico:
           type: string
-          example: 1
+          example: "1"
         preco_hora:
           type: number
           example: 10000
@@ -44,7 +45,7 @@ components:
           example: 12
         estado:
           type: string
-          example: aceito
+          example: "aceito"
         enabled:
           type: boolean
           example: true
@@ -55,24 +56,22 @@ components:
         - estado
         - enabled
 
-    #Schema generico para sucesso
-    ResponseSucess:
-      ttpe: object
-      propreties:
+    ResponseSuccess:
+      type: object
+      properties:
         message:
           type: string
-          example: "Servico criado com sucesso"
+          example: "Proposta criada com sucesso"
         status:
           type: boolean
           example: true
 
-    #proposta generico de resposta de erro
     ResponseError:
       type: object
       properties:
         message:
           type: string
-          example: "Erro ao buscar serviços"
+          example: "Erro ao processar proposta"
         status:
           type: boolean
           example: false

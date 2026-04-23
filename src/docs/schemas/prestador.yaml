@@ -1,16 +1,15 @@
-#schema/prestador.yaml
-
 components:
   schemas:
+
     Prestador:
       type: object
       properties:
         id:
           type: string
-          example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
+          example: "4f4662d3-27fc-4e29-ac53-1a9ecf73e69e"
         id_utilizadores:
           type: string
-          example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
+          example: "4f4662d3-27fc-4e29-ac53-1a9ecf73e69e"
         nif:
           type: number
           example: 987654321
@@ -34,17 +33,19 @@ components:
           example: true
         created_at:
           type: string
+          format: date-time
           example: "2010-12-10T00:00:00.000Z"
         updated_at:
-            typr: string
-            example: "2010-12-10T00:00.000Z"
-  
+          type: string
+          format: date-time
+          example: "2010-12-10T00:00:00.000Z"
+
     CreatePrestador:
       type: object
       properties:
         id_utilizadores:
           type: string
-          example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
+          example: "4f4662d3-27fc-4e29-ac53-1a9ecf73e69e"
         nif:
           type: number
           example: 987654321
@@ -67,19 +68,18 @@ components:
           type: boolean
           example: true
       required:
-        - id_utilizadores  
-        - nif  
-        - profissao  
-        - taxa_urgencia  
-        - minimo_desconto  
-        - percentagem_desconto  
-        - disponivel   
-        - enabled  
+        - id_utilizadores
+        - nif
+        - profissao
+        - taxa_urgencia
+        - minimo_desconto
+        - percentagem_desconto
+        - disponivel
+        - enabled
 
-    #Schema generico para sucesso
-    ResponseSucess:
-      ttpe: object
-      propreties:
+    ResponseSuccess:
+      type: object
+      properties:
         message:
           type: string
           example: "Prestador criado com sucesso"
@@ -87,7 +87,6 @@ components:
           type: boolean
           example: true
 
-    #prestador generico de resposta de erro
     ResponseError:
       type: object
       properties:

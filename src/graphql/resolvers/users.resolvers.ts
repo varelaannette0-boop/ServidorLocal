@@ -1,4 +1,5 @@
 
+import { PrestadorModel } from "../../models/prestador.models.js";
 import { UserModel } from "../../models/users.models.js";
 import { getUserById } from "../../users.js";
 import type { UserType } from "../../utils/types.js";
@@ -15,7 +16,7 @@ export const userResolver = {
     },
 
     Mutation: {
-        createUsers: async (_: any, args: {user: UserType}) => {
+        createUser: async (_: any, args: {user: UserType}) => {
             return await UserModel.create(args.user);
         },
 
@@ -27,6 +28,12 @@ export const userResolver = {
             return await UserModel.delete(args.id);
        }
 
-    }
+    },
+
+   Users: {
+  prestador: async (parent: UserType) => {
+    return await PrestadorModel.get(parent.id);
+  }
+}
 
 }

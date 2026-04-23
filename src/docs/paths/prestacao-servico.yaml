@@ -1,9 +1,3 @@
-# create: "/create",
-# getAll: "/",
-# getById: "/get-by-id/:id",
-# update: "/update/:id",
-# delete: "/delete/:id"
-
 paths:
   /prestacao-servico:
     get:
@@ -19,7 +13,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ResponseSuccess"
         "400":
-          description: Dados de prestação de serviço inválidos
+          description: Dados inválidos
           content:
             application/json:
               schema:
@@ -45,13 +39,13 @@ paths:
               $ref: "#/components/schemas/CreatePrestacaoServico"
       responses:
         "200":
-          description: Prestação de serviço criada com sucesso
+          description: Criada com sucesso
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseSuccess"
         "400":
-          description: Dados de prestação de serviço inválidos
+          description: Dados inválidos
           content:
             application/json:
               schema:
@@ -78,19 +72,19 @@ paths:
             example: "1"
       responses:
         "200":
-          description: Prestação de serviço encontrada com sucesso
+          description: Encontrada com sucesso
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseSuccess"
         "400":
-          description: Dados de prestação de serviço inválidos
+          description: Dados inválidos
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseError"
         "500":
-          description: Erro ao buscar prestação de serviço
+          description: Erro ao buscar
           content:
             application/json:
               schema:
@@ -119,19 +113,19 @@ paths:
               $ref: "#/components/schemas/UpdatePrestacaoServico"
       responses:
         "200":
-          description: Prestação de serviço atualizada com sucesso
+          description: Atualizada com sucesso
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseSuccess"
         "400":
-          description: Dados de prestação de serviço inválidos
+          description: Dados inválidos
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseError"
         "500":
-          description: Erro ao atualizar prestação de serviço
+          description: Erro ao atualizar
           content:
             application/json:
               schema:
@@ -152,34 +146,33 @@ paths:
             example: "1"
       responses:
         "200":
-          description: Prestação de serviço deletada com sucesso
+          description: Deletada com sucesso
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseSuccess"
         "400":
-          description: Dados de prestação de serviço inválidos
+          description: Dados inválidos
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseError"
         "500":
-          description: Erro ao deletar prestação de serviço
+          description: Erro ao deletar
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseError"
 
-
-  /prestacao-servico/get-by-categoria{categoria}:
+  /prestacao-servico/get-by-categoria/{categoria}:
     get:
-      summary: Buscar todas as prestações de serviço por categoria
+      summary: Buscar prestações por categoria
       tags:
         - Prestação de Serviço
-      description: Retorna uma lista de prestações de serviço por categoria
+      description: Retorna prestações de serviço por categoria
       parameters:
         - name: categoria
-          in: patch
+          in: path
           required: true
           schema:
             type: string
@@ -188,65 +181,62 @@ paths:
           in: query
           required: false
           schema:
-            type: string
-            example: "10"
+            type: integer
+            example: 10
         - name: offset
           in: query
           required: false
           schema:
-            type: string
-            example: "0
+            type: integer
+            example: 0
       responses:
         "200":
-          description: Prestação de serviço por categoria encontrada com sucesso
+          description: Lista encontrada
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseSuccess"
         "400":
-          description: Dados de prestacao de servico por categoria invalido
+          description: Dados inválidos
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseError"
         "500":
-          description: Erro ao buscar prestação de serviço por categoria
+          description: Erro ao buscar
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseError"
 
-
-
-
   /prestacao-servico/get-all-detalhado:
     get:
-      summary: Buscar todas as prestações de serviço detalhadas
+      summary: Buscar todas as prestações detalhadas
       tags:
         - Prestação de Serviço
-      description: Retorna uma lista de todas as prestações de serviço detalhadas
+      description: Retorna lista detalhada
       parameters:
         - name: limit
           in: query
           required: false
           schema:
-            type: string
-            example: "10"
+            type: integer
+            example: 10
         - name: offset
           in: query
           required: false
           schema:
-            type: string
-            example: "0"
+            type: integer
+            example: 0
       responses:
         "200":
-          description: Prestação de serviço detalhada encontrada com sucesso
+          description: Lista detalhada
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseSuccess"
         "500":
-          description: Erro ao buscar prestação de serviço detalhada
+          description: Erro ao buscar
           content:
             application/json:
               schema:

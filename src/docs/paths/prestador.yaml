@@ -1,4 +1,3 @@
-# paths/prestador.yaml
 paths:
   /prestador:
     get:
@@ -16,7 +15,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/Prestador"
         "404":
-          description: "Nenhum prestador encontrado"
+          description: Nenhum prestador encontrado
           content:
             application/json:
               schema:
@@ -40,7 +39,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ResponseSucess"
+                $ref: "#/components/schemas/ResponseSuccess"
         "400":
           description: Erro ao criar prestador
           content:
@@ -60,69 +59,65 @@ paths:
           required: true
           description: ID do prestador
           schema:
-            type: integer
-            example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
+            type: string
+            example: "4f4662d3-27fc-4e29-ac53-1a9ecf73e69e"
       responses:
         "200":
           description: Prestador encontrado
           content:
             application/json:
               schema:
-                type: object
-                $ref: "#/components/schemas/ResponseSucess"
+                $ref: "#/components/schemas/ResponseSuccess"
         "404":
           description: Prestador nao encontrado
           content:
             application/json:
               schema:
-                type: object
                 $ref: "#/components/schemas/ResponseError"
+
   /prestador/update/{id}:
     put:
-      summary: Actualizar um utiliazdor por ID
+      summary: Atualizar um prestador por ID
       tags:
         - Prestador
-      description: Actualiza um prestador especificado pelo ID
+      description: Atualiza um prestador especificado pelo ID
       parameters:
         - name: id
           in: path
           required: true
           description: ID do prestador
           schema:
-            type: integer
-            example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
+            type: string
+            example: "4f4662d3-27fc-4e29-ac53-1a9ecf73e69e"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              $href: "#/components/schemas/CreateUser" #tem mesma informacao de CreateUser
+              $ref: "#/components/schemas/CreateUser"
       responses:
         "200":
-          description: Prestador actualizado com sucesso
+          description: Prestador atualizado com sucesso
           content:
             application/json:
               schema:
-                type: object
-                $ref: "#/components/schemas/ResponseSucess"
+                $ref: "#/components/schemas/ResponseSuccess"
         "400":
           description: Dados invalidos
           content:
             application/json:
               schema:
-                type: object
                 $ref: "#/components/schemas/ResponseError"
         "404":
           description: Prestador nao encontrado
           content:
             application/json:
               schema:
-                type: object
                 $ref: "#/components/schemas/ResponseError"
+
   /prestador/delete/{id}:
     delete:
-      summary: Apaga um prestador
+      summary: Apagar um prestador
       tags:
         - Prestador
       description: Apaga um prestador especificado pelo ID
@@ -132,20 +127,18 @@ paths:
           required: true
           description: ID do prestador
           schema:
-            type: integer
-            example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
+            type: string
+            example: "4f4662d3-27fc-4e29-ac53-1a9ecf73e69e"
       responses:
         "200":
           description: Prestador apagado
           content:
             application/json:
               schema:
-                type: object
-                $ref: "#/components/schemas/ResponseSucess"
+                $ref: "#/components/schemas/ResponseSuccess"
         "404":
           description: Prestador nao encontrado
           content:
             application/json:
               schema:
-                type: object
                 $ref: "#/components/schemas/ResponseError"

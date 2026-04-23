@@ -1,152 +1,145 @@
 
-# paths/empresa.yaml
 paths:
-/empresa:
-get:
-summary: Listar todos as empresas
-tags:
-- Empresa
-description: Retorna uma lista de todos os empresa disponíveis
-responses:
-"200":
-description: Lista de empresa
-content:
-application/json:
-schema:
-type: array
-items:
-$ref: "#/components/schemas/Empresa"
-"404":
-description: "Nenhum empresa encontrado"
-content:
-application/json:
-schema:
-$ref: "#/components/schemas/ResponseError"
+  /empresa:
+    get:
+      summary: Listar todas as empresas
+      tags:
+        - Empresa
+      description: Retorna uma lista de todas as empresas disponíveis
+      responses:
+        "200":
+          description: Lista de empresas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Empresa"
+        "404":
+          description: Nenhuma empresa encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseError"
 
-/empresa/create:
-post:
-summary: Criar um novo empresa
-tags:
-- Empresa
-description: Cria um novo empresa
-requestBody:
-required: true
-content:
-application/json:
-schema:
-$ref: "#/components/schemas/CreateEmpresa"
-responses:
-"200":
-description: Empresa criado com sucesso
-content:
-application/json:
-schema:
-$ref: "#/components/schemas/ResponseSucess"
-"400":
-description: Erro ao criar empresa
-content:
-application/json:
-schema:
-$ref: "#/components/schemas/ResponseError"
+  /empresa/create:
+    post:
+      summary: Criar uma nova empresa
+      tags:
+        - Empresa
+      description: Cria uma nova empresa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateEmpresa"
+      responses:
+        "200":
+          description: Empresa criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSuccess"
+        "400":
+          description: Erro ao criar empresa
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseError"
 
-/empresa/get-by-id/{id}:
-get:
-summary: Buscar um empresa por ID
-tags:
-- Empresa
-description: Retorna um empresa especificado pelo ID
-parameters:
-- name: id
-in: path
-required: true
-description: ID do empresa
-schema:
-type: integer
-example: 1
-responses:
-"200":
-description: Empresa encontrado
-content:
-application/json:
-schema:
-type: object
-$ref: "#/components/schemas/ResponseSucess"
-"404":
-description: Empresa nao encontrado
-content:
-application/json:
-schema:
-type: object
-$ref: "#/components/schemas/ResponseError"
-/empresa/update/{id}:
-put:
-summary: Actualizar um empresa por ID
-tags:
-- Empresa
-description: Actualiza um empresa especificado pelo ID
-parameters:
-- name: id
-in: path
-required: true
-description: ID do empresa
-schema:
-type: integer
-example: 1
-requestBody:
-required: true
-content:
-application/json:
-schema:
-type: object
-$href: "#/components/schemas/CreateEmpresa" #tem mesma informacao de CreateUser
-responses:
-"200":
-description: Empresa actualizado com sucesso
-content:
-application/json:
-schema:
-type: object
-$ref: "#/components/schemas/ResponseSucess"
-"400":
-description: Dados invalidos
-content:
-application/json:
-schema:
-type: object
-$ref: "#/components/schemas/ResponseError"
-"404":
-description: Empresa nao encontrado
-content:
-application/json:
-schema:
-type: object
-$ref: "#/components/schemas/ResponseError"
-/empresa/delete/{id}:
-delete:
-summary: Apaga um empresa
-tags:
-- Empresa
-description: Apaga um empresa especificado pelo ID
-parameters:
-- name: id
-in: path
-required: true
-description: ID do empresa
-schema:
-type: integer
-example: 1
-responses:
-"200":
-description: Empresa apagado
-content:
-application/json:
-schema:
-type: object
-$ref: "#/components/schemas/ResponseSucess"
-"404":
-description: Empresa nao encontrado
-content:
-application/json:
-schema:
-type: object
-$ref: "#/components/schemas/ResponseError"
+  /empresa/get-by-id/{id}:
+    get:
+      summary: Buscar empresa por ID
+      tags:
+        - Empresa
+      description: Retorna uma empresa especificada pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID da empresa
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: Empresa encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSuccess"
+        "404":
+          description: Empresa não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseError"
+
+  /empresa/update/{id}:
+    put:
+      summary: Atualizar empresa por ID
+      tags:
+        - Empresa
+      description: Atualiza uma empresa especificada pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID da empresa
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateEmpresa"
+      responses:
+        "200":
+          description: Empresa atualizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSuccess"
+        "400":
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseError"
+        "404":
+          description: Empresa não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseError"
+
+  /empresa/delete/{id}:
+    delete:
+      summary: Apagar empresa
+      tags:
+        - Empresa
+      description: Apaga uma empresa especificada pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID da empresa
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: Empresa apagada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSuccess"
+        "404":
+          description: Empresa não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseError"

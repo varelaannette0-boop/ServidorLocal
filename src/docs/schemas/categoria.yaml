@@ -1,63 +1,60 @@
-#schema/orcamento.yaml
-
 components:
-    schemas:
-      Categoria:
-          type: object
-          properties:
-            id:
-               type: string
-               example: 2
-      designacao:
+  schemas:
+
+    Categoria:
+      type: object
+      properties:
+        id:
           type: string
-          example: "contrucao civil"
-      icone:
-type: string
-example: "Image"
-created_at:
-type: string
-example: "2010-12-10T00:00:00.000Z"
-updated_at:
-typr: string
-example: "2010-12-10T00:00.000Z"
+          example: "2"
+        designacao:
+          type: string
+          example: "construcao civil"
+        icone:
+          type: string
+          example: "Image"
+        created_at:
+          type: string
+          example: "2010-12-10T00:00:00.000Z"
+        updated_at:
+          type: string
+          example: "2010-12-10T00:00:00.000Z"
 
-CreateCategoria:
-type: object
-properties:
-total:
-type: number
-example: 1000
-id_utilizadores:
-type: string
-example: "M002b "
-enabled:
-type: boolean
-example: true
-required:
-- total
-- id_utilizadores
-- enabled
+    CreateCategoria:
+      type: object
+      properties:
+        total:
+          type: number
+          example: 1000
+        id_utilizadores:
+          type: string
+          example: "M002b"
+        enabled:
+          type: boolean
+          example: true
+      required:
+        - total
+        - id_utilizadores
+        - enabled
 
-#Schema generico para sucesso
-ResponseSucess:
-ttpe: object
-propreties:
-message:
-type: string
-example: "Categoria criado com sucesso"
-status:
-type: boolean
-example: true
+    ResponseSucess:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Categoria criada com sucesso"
+        status:
+          type: boolean
+          example: true
 
-#orcamento generico de resposta de erro
-ResponseError:
-type: object
-properties:
-message:
-type: string
-example: "Erro ao buscar Categoria"
-status:
-type: boolean
-example: false
-data:
-type: object
+    ResponseError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Erro ao buscar Categoria"
+        status:
+          type: boolean
+          example: false
+        data:
+          type: object

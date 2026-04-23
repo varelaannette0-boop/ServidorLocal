@@ -1,21 +1,21 @@
-#schema/user.yaml
-
 components:
   schemas:
+
     User:
       type: object
       properties:
         id:
           type: string
-          example: 4f4662d3-27fc-4e29-ac53-1a9ecf73e69e
+          example: "4f4662d3-27fc-4e29-ac53-1a9ecf73e69e"
         nome:
           type: string
-          example: "Lula Inacio"
+          example: "Lula Inácio"
         numero_identificacao:
           type: string
-          example: "M002b "
+          example: "M002b"
         data_nascimento:
           type: string
+          format: date
           example: "1950-04-01"
         email:
           type: string
@@ -37,67 +37,62 @@ components:
           example: true
         created_at:
           type: string
+          format: date-time
           example: "2010-12-10T00:00:00.000Z"
         updated_at:
-            typr: string
-            example: "2010-12-10T00:00.000Z"
-  
+          type: string
+          format: date-time
+          example: "2010-12-10T00:00:00.000Z"
+
     CreateUser:
       type: object
       properties:
         nome:
           type: string
-          example: "Lula Inacio"
         numero_identificacao:
           type: string
-          example: "M002b "
         data_nascimento:
           type: string
-          example: "1950-04-01"
+          format: date
         email:
           type: string
-          example: "mentiroso@gmail.com"
         password:
           type: string
-          example: "$12$wOkrxlIb51AYJKFadnuSR.3k292v/lMsyqoKYmDae5LcgOuNQIWXy"
         telefone:
           type: string
-          example: "9919191"
         pais:
           type: string
-          example: "Brasil"
         localidade:
           type: string
-          example: "Rio de Janeiro"
         enabled:
           type: boolean
-          example: true
       required:
-        - nome  
-        - numero_identificacao  
-        - data_nascimento  
-        - email  
-        - password  
-        - telefone  
-        - pais  
-        - localidade  
-        - enabled  
+        - nome
+        - numero_identificacao
+        - data_nascimento
+        - email
+        - password
+        - telefone
+        - pais
+        - localidade
+        - enabled
 
-      LoginUser:
-         type: object
-         properties:
-            email:
-              type: string
-              example: "user@example.com"
-            password:
-              type: string
-              example: "senha123"
-
-
-    #Schema generico para sucesso
-    ResponseSucess:
+    LoginUser:
       type: object
-      propreties:
+      properties:
+        email:
+          type: string
+          example: "user@example.com"
+        password:
+          type: string
+          example: "senha123"
+      required:
+        - email
+        - password
+
+    ResponseSuccess:
+      type: object
+      properties:
         message:
           type: string
           example: "Utilizador criado com sucesso"
@@ -105,7 +100,6 @@ components:
           type: boolean
           example: true
 
-    #user generico de resposta de erro
     ResponseError:
       type: object
       properties:
@@ -117,3 +111,4 @@ components:
           example: false
         data:
           type: object
+          nullable: true
