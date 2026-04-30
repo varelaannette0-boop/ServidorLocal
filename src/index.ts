@@ -14,17 +14,22 @@ import swaggerUi from "swagger-ui-express";
 import { typeDefs, resolvers } from "./graphql/index.js";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@as-integrations/express5";
+import cors from "cors"
+
 
 const app = express();
 app.use(express.json());
-
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true,
+}));
 
 app.use("/service", serviceRouter);
 app.use("/orcamento", orcamentoRouter);
 app.use("/prestador", prestadorRouter);
 app.use("/users", userRouter);
 app.use("/proposta", propostaRouter);
-app.use("/prestacao-servico", prestacaoServicoRouter); // ✔️ corrigido
+app.use("/prestacao-servico", prestacaoServicoRouter); 
 
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
